@@ -22,6 +22,10 @@
             android:name=".UserMainActivity"
             android:label="@string/title_activity_user_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView googleTextView = (TextView) btnSignInWithGoogle.getChildAt(0);
         googleTextView.setText("Sign In with Google");
 
+
         googleSignInSetUp();
         fireBaseAuthentication();
         setOnClickListenersOnLoginPage();
@@ -160,18 +161,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseAuth.getInstance().addAuthStateListener(authStateListener);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (authStateListener != null) {
-            FirebaseAuth.getInstance().removeAuthStateListener(authStateListener);
-        }
-    }
 
 }

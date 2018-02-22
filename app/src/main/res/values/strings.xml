@@ -7,11 +7,11 @@
     <string name="txt_password">Password</string>
     <string name="txt_confirm_password">Confirm Password</string>
     <string name="btn_create_my_account">Create my account</string>
-    <string name="lnk_back_to_login">Already have an account?Back to Login</string>
+    <string name="lnk_back_to_login"><u>Already have an account?Back to Login</u></string>
     <string name="title_activity_login_with_email">LoginWithEmailActivity</string>
     <string name="btn_login">Login</string>
     <string name="txt_forgotpassword">Forgot Password</string>
-    <string name="lnk_createaccound">Doesn\'t have an account?Create now</string>
+    <string name="lnk_createaccound"><u>Doesn\'t have an account?Create now</u></string>
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
