@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"></View>
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_user_image"
         android:layout_width="124dp"
         android:layout_height="96dp"
         android:layout_marginTop="40dp"
@@ -31,10 +31,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="181dp"
-        android:layout_height="32dp"
+        android:layout_width="184dp"
+        android:layout_height="49dp"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/arima_madurai_medium"
+        android:fontFamily="@font/open_sans_light"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
@@ -43,32 +43,33 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/img_user_image" />
 
     <Button
         android:id="@+id/btn_signin_email"
         android:layout_width="320dp"
-        android:layout_height="47dp"
+        android:layout_height="60dp"
         android:layout_marginTop="80dp"
-        android:background="#093640"
-        android:fontFamily="monospace"
-        android:onClick="LoginActivity"
+        android:background="@drawable/button_selector"
+        android:fontFamily="@font/open_sans_light"
         android:text="@string/btn_login_email"
         android:textColor="@android:color/background_light"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+   <!--"#093640"-->
     <Button
         android:id="@+id/btn_create_account"
         android:layout_width="320dp"
-        android:layout_height="47dp"
+        android:layout_height="60dp"
         android:layout_marginTop="24dp"
-        android:background="?attr/colorButtonNormal"
-        android:fontFamily="monospace"
-        android:onClick="RegisterActivity"
+        android:background="@drawable/button1_selector"
+        android:fontFamily="@font/open_sans_light"
         android:text="@string/btn_create_account"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -77,10 +78,9 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_with_google"
         android:layout_width="324dp"
-        android:layout_height="54dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="23dp"
-
+        android:layout_marginTop="18dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.494"

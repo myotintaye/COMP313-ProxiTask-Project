@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_menu_mail"
             android:title="Inbox" />
         <item
+            android:id="@+id/nav_noti"
+            android:icon="@drawable/ic_notifications"
+            android:title="Notifications" />
+        <item
             android:id="@+id/nav_task"
             android:icon="@drawable/ic_menu_task"
             android:title="My Tasks" />

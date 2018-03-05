@@ -1,10 +1,13 @@
 package sample.example.com.proxitask;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,14 +17,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+        implements NavigationView.OnNavigationItemSelectedListener, NotificationFragment.OnFragmentInteractionListener,
+        MyProfileFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener{
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +36,21 @@ public class UserMainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_task);
+        fab = (FloatingActionButton) findViewById(R.id.fab_add_task);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Create your task!", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                //create your task fragment
+                setTitle("Create a Task");
+                CreateTaskFragment createTaskFragment = new CreateTaskFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container_main,createTaskFragment).commit();
+                fab.hide();
             }
         });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,6 +60,19 @@ public class UserMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        //nav_header
+        TextView drawerEmail =  headerView.findViewById(R.id.txt_user_email);
+        TextView drawerUserName = headerView.findViewById(R.id.txt_user_name);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+
+            drawerEmail.setText(currentUser.getEmail());
+            //need to fix - not showing the name from database
+          drawerUserName.setText(currentUser.getDisplayName());
+
+        }
     }
 
     @Override
@@ -88,11 +115,24 @@ public class UserMainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
+            fab.show();
         } else if (id == R.id.nav_inbox) {
 
-        } else if (id == R.id.nav_task) {
-
         } else if (id == R.id.nav_profile) {
+
+            setTitle("My Profile");
+            MyProfileFragment profileFragment = new MyProfileFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_main,profileFragment).commit();
+
+        }else if (id == R.id.nav_task) {
+
+
+        } else if (id == R.id.nav_noti) {
+            setTitle("Notifications");
+            NotificationFragment notificationFragment = new NotificationFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container_main,notificationFragment).commit();
 
         } else if (id == R.id.nav_account_settings) {
 
@@ -113,4 +153,8 @@ public class UserMainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

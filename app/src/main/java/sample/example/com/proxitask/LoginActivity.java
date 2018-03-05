@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
@@ -63,14 +64,15 @@ public class LoginActivity extends AppCompatActivity {
         setOnClickListenersOnLoginPage();
     }
 
+    //firebase authentication state listener
     private void fireBaseAuthentication(){
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
             if (user != null) {
-
                     Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                    logToken(user);
                     Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
                     startActivity(intent);
                     finish();
@@ -99,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(googleSignInIntent,RC_SIGN_IN);
     }
 
+    //google popup
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -116,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful())
                         {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+
                             if (user!= null)
                             {
                                 Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_LONG).show();
@@ -134,6 +138,22 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void logToken(FirebaseUser user) {
+                user.getIdToken(true)
+                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                if (task.isSuccessful()) {
+                                    String idToken = task.getResult().getToken();
+                                    Log.d("idToken", idToken);
+                                } else {
+                                    // Handle error -> task.getException();
+                                    Log.d("ERROR", task.getException().toString());
+                                }
+                            }
+                        });
+
     }
 
     private void setOnClickListenersOnLoginPage()
@@ -162,5 +182,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    // Activity Lifecyle handlers
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authStateListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(authStateListener);
+        }
+    }
 
 }
