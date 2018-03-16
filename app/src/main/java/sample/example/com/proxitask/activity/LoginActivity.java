@@ -1,4 +1,4 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -23,6 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.network.RetrofitInstance;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (user != null) {
                     Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                    logToken(user);
+                    setRetrofitHeader(user);
                     Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
                     startActivity(intent);
                     finish();
@@ -140,12 +143,14 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void logToken(FirebaseUser user) {
+    private void setRetrofitHeader(FirebaseUser user) {
                 user.getIdToken(true)
                         .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                             public void onComplete(@NonNull Task<GetTokenResult> task) {
                                 if (task.isSuccessful()) {
                                     String idToken = task.getResult().getToken();
+                                    RetrofitInstance.setToken(idToken);
+
                                     Log.d("idToken", idToken);
                                 } else {
                                     // Handle error -> task.getException();

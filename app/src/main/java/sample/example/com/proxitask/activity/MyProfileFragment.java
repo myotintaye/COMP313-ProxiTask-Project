@@ -1,23 +1,26 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import sample.example.com.proxitask.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NotificationFragment.OnFragmentInteractionListener} interface
+ * {@link MyProfileFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NotificationFragment#newInstance} factory method to
+ * Use the {@link MyProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotificationFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +32,7 @@ public class NotificationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public NotificationFragment() {
+    public MyProfileFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +42,11 @@ public class NotificationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NotificationFragment.
+     * @return A new instance of fragment MyProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NotificationFragment newInstance(String param1, String param2) {
-        NotificationFragment fragment = new NotificationFragment();
+    public static MyProfileFragment newInstance(String param1, String param2) {
+        MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +67,7 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -1,14 +1,11 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.util.Arrays;
-import sample.example.com.proxitask.Model.User;
-import static sample.example.com.proxitask.Utils.isEmpty;
+
+import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.User;
+import static sample.example.com.proxitask.activity.Utils.isEmpty;
 
 public class RegisterActivity extends AppCompatActivity {
 
