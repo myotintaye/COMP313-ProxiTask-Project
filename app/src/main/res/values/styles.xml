@@ -17,4 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="btnFAB">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <!--Buttons-->
+    <style name="btnPrimary">
+        <item name="android:textSize">@dimen/font_size</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:paddingLeft">@dimen/padding_button</item>
+        <item name="android:paddingRight">@dimen/padding_button</item>
+    </style>
+
 </resources>
