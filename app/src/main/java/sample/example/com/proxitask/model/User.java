@@ -1,4 +1,4 @@
-package sample.example.com.proxitask.Model;
+package sample.example.com.proxitask.model;
 
 
 import com.google.firebase.database.PropertyName;

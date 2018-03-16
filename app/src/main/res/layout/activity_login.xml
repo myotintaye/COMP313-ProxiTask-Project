@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@android:style/Theme.NoTitleBar"
-    tools:context="sample.example.com.proxitask.LoginActivity">
+    tools:context="sample.example.com.proxitask.activity.LoginActivity">
 
     <View
         android:id="@+id/opacityFilter"

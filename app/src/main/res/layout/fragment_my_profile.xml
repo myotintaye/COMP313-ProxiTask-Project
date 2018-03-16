@@ -3,7 +3,7 @@
     android:id="@+id/fragment_my_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sample.example.com.proxitask.MyProfileFragment">
+    tools:context="sample.example.com.proxitask.activity.MyProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

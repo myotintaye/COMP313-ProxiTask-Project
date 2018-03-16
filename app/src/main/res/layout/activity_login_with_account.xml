@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="25dp"
-    tools:context="sample.example.com.proxitask.LoginWithAccountActivity">
+    tools:context="sample.example.com.proxitask.activity.LoginWithAccountActivity">
 
     <TextView
         android:id="@+id/textView2"

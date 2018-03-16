@@ -1,4 +1,4 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
 import java.util.function.Predicate;
 

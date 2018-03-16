@@ -4,15 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingBottom="10dp"
     android:paddingEnd="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:paddingStart="20dp"
     android:paddingTop="10dp"
-    tools:context="sample.example.com.proxitask.CreateTaskFragment">
+    tools:context="sample.example.com.proxitask.activity.CreateTaskFragment">
 
     <EditText
         android:id="@+id/edt_task_title"
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/rounded_border_edittext"
         android:ems="10"
@@ -24,7 +28,7 @@
 
     <EditText
         android:id="@+id/edt_task_decrription"
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_above="@+id/imageView2"
         android:layout_alignEnd="@+id/edt_reward"
@@ -36,7 +40,7 @@
         android:textAlignment="textStart" />
 
     <RelativeLayout
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/fui_transparent">
@@ -51,7 +55,7 @@
 
         <EditText
             android:id="@+id/edt_reward"
-            android:layout_width="302dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="7dp"
@@ -67,7 +71,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/fui_transparent">
@@ -82,7 +86,7 @@
 
         <EditText
             android:id="@+id/edt_date"
-            android:layout_width="302dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="7dp"
@@ -97,7 +101,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/fui_transparent">
@@ -113,7 +117,7 @@
 
         <EditText
             android:id="@+id/edt_address"
-            android:layout_width="302dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="7dp"
@@ -128,10 +132,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-    android:layout_width="364dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@color/fui_transparent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/fui_transparent">
 
         <ImageView
             android:id="@+id/imagePhone"
@@ -143,7 +147,7 @@
 
         <EditText
             android:id="@+id/edt_phone"
-            android:layout_width="302dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="7dp"
@@ -155,10 +159,10 @@
             android:paddingStart="30dp"
             android:textAlignment="textStart"
             android:textSize="18sp" />
-</RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/fui_transparent">
@@ -174,11 +178,10 @@
 
         <EditText
             android:id="@+id/edt_km"
-            android:layout_width="302dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="6dp"
+            android:layout_toEndOf="@+id/imageKm"
             android:background="@drawable/rounded_border_edittext"
             android:ems="10"
             android:gravity="center"
@@ -190,10 +193,9 @@
 
     <Button
         android:id="@+id/btn_save_task"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button1_selector"
         android:fontFamily="@font/open_sans_light"
         android:text="@string/btn_save_task"

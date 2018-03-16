@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="26dp"
-    tools:context="sample.example.com.proxitask.RegisterActivity">
+    tools:context="sample.example.com.proxitask.activity.RegisterActivity">
 
     <TextView
         android:id="@+id/textView2"

@@ -1,10 +1,12 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import sample.example.com.proxitask.R;
 
 public class MyProfileActivity extends AppCompatActivity implements View.OnClickListener{
 

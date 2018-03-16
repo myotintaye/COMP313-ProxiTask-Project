@@ -1,7 +1,9 @@
-package sample.example.com.proxitask;
+package sample.example.com.proxitask.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import sample.example.com.proxitask.R;
 
 public class NotificationActivity extends AppCompatActivity {
 
