@@ -1,10 +1,14 @@
 package sample.example.com.proxitask.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserTask {
 
+    @SerializedName("user_id")
     private String userId;
+    @SerializedName("user_email")
     private String userEmail;
-    private String taskTitle;
+    private String title;
     private String taskDescription;
     private String subTitle;
     private double price;
@@ -16,6 +20,14 @@ public class UserTask {
     private String date;
     private String startTime;
     private String endTime;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getUserId() {
         return userId;
@@ -31,14 +43,6 @@ public class UserTask {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public String getTaskTitle() {
-        return taskTitle;
-    }
-
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
     }
 
     public String getTaskDescription() {

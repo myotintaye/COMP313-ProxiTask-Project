@@ -37,6 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.APIResponse;
 import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
@@ -69,16 +70,17 @@ public class UserMainActivity extends AppCompatActivity
     }
 
     private void populateTasksListView() {
-        taskService.getAllTasks().enqueue(new Callback<List<UserTask>>() {
+        taskService.getAllTasks().enqueue(new Callback<APIResponse>() {
             @Override
-            public void onResponse(Call<List<UserTask>> call, Response<List<UserTask>> response) {
-                List<String> a = response.body().stream().map(task -> task.getTaskTitle()).collect(Collectors.toList());
-                Log.d("test", a.size() + "");
+            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
 
-                List<String> taskNames = new ArrayList<>(response.body().size());
 
-                for (UserTask task : response.body()) {
-                    taskNames.add(task.getTaskTitle());
+                List<UserTask> tasks = response.body().getData();
+
+
+                List<String> taskNames = new ArrayList<String>();
+                for (UserTask task : tasks) {
+                    taskNames.add(task.getTitle());
                 }
                 taskAdapter.addAll(taskNames);
                 tasksListView.setAdapter(taskAdapter);
@@ -86,7 +88,7 @@ public class UserMainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<List<UserTask>> call, Throwable t) {
+            public void onFailure(Call<APIResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Call failed",Toast.LENGTH_LONG).show();
             }
         });

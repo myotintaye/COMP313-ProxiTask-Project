@@ -32,6 +32,18 @@ public class RetrofitInstance {
                     }
                 });
             }
+            httpClientBuilder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request().newBuilder().addHeader("TEST", "TEST 123").build();
+                    Log.d("HTTP CLIENT",
+                            "testing");
+                    return chain.proceed(request);
+                }
+            });
+
+
+
 
             httpClientBuilder.addInterceptor(new Interceptor() {
                 @Override
