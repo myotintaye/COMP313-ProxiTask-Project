@@ -14,7 +14,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_profile);
+        setContentView(R.layout.activity_my_profile_not_used);
         tvEdit = findViewById(R.id.tv_edit);
 
         tvEdit.setOnClickListener(this);
