@@ -46,43 +46,28 @@
         app:layout_constraintTop_toBottomOf="@+id/img_user_image" />
 
     <Button
+        style="@style/btnDark"
         android:id="@+id/btn_signin_email"
-        style="@style/btnPrimary"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/button_selector"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/open_sans_light"
-        android:text="@string/btn_login_email"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text= "@string/btn_login_email"
         app:layout_constraintLeft_toLeftOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-   <!--"#093640"-->
     <Button
+        style="@style/btnDark"
         android:id="@+id/btn_create_account"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button1_selector"
-        android:fontFamily="@font/open_sans_light"
+        android:layout_marginTop="30dp"
         android:text="@string/btn_create_account"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_signin_email" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_with_google"
-        android:layout_width="324dp"
+        android:layout_width="325dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="18dp"
-        android:textAlignment="center"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="parent"
