@@ -53,19 +53,13 @@
         android:inputType="textPassword" />
 
     <Button
+        style="@style/btnDark"
         android:id="@+id/btn_login"
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/button_selector"
-        android:elevation="0dp"
-        android:fontFamily="@font/open_sans_light"
         android:onClick="signInWithEmail"
-        android:text="@string/btn_login"
-        android:textAllCaps="false"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="@string/btn_login" />
 
     <TextView
         android:id="@+id/textView7"
