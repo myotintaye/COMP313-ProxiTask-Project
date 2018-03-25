@@ -8,6 +8,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sample.example.com.proxitask.activity.Utils;
@@ -22,25 +23,20 @@ public class RetrofitInstance {
         if (retrofit == null) {
             OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
-            if(idToken != null && !Utils.isEmpty(idToken)) {
-                httpClientBuilder.addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request().newBuilder().addHeader("idToken", idToken).build();
-                        Log.d("HTTP CLIENT", idToken);
-                        return chain.proceed(request);
-                    }
-                });
-            }
-            httpClientBuilder.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder().addHeader("TEST", "TEST 123").build();
-                    Log.d("HTTP CLIENT",
-                            "testing");
-                    return chain.proceed(request);
-                }
-            });
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+//            if(idToken != null && !Utils.isEmpty(idToken)) {
+//                httpClientBuilder.addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Chain chain) throws IOException {
+//                        Request request = chain.request().newBuilder().addHeader("idToken", idToken).build();
+//                        Log.d("HTTP CLIENT", idToken);
+//                        return chain.proceed(request);
+//                    }
+//                });
+//            }
+            httpClientBuilder.addInterceptor(loggingInterceptor);
 
 
 

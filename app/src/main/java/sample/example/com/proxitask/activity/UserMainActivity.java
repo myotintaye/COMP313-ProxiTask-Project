@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
@@ -41,15 +42,17 @@ import sample.example.com.proxitask.model.APIResponse;
 import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
+import sample.example.com.proxitask.network.TokenStore;
 
 public class UserMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NotificationFragment.OnFragmentInteractionListener,
         MyProfileFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener {
 
+    FragmentManager fragmentManager;
     TaskService taskService;
     ListView tasksListView;
     ArrayAdapter<String> taskAdapter;
-    ProgressBar progressBar;
+    ProgressBar  progressBar;
     FloatingActionButton fab;
 
     @Override
@@ -57,7 +60,9 @@ public class UserMainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
 
-        progressBar = findViewById(R.id.progress_bar);
+        fragmentManager = getSupportFragmentManager();
+
+        progressBar= findViewById(R.id.progressBar2);
         tasksListView = findViewById(R.id.list_all_tasks);
         taskAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
 
@@ -66,17 +71,14 @@ public class UserMainActivity extends AppCompatActivity
         buildDrawer();
 
         populateTasksListView();
-
+      //  progressBar.setVisibility(View.GONE);
     }
 
     private void populateTasksListView() {
-        taskService.getAllTasks().enqueue(new Callback<APIResponse>() {
+        taskService.getAllTasks(TokenStore.getToken(this)).enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-
-
                 List<UserTask> tasks = response.body().getData();
-
 
                 List<String> taskNames = new ArrayList<String>();
                 for (UserTask task : tasks) {
@@ -105,8 +107,8 @@ public class UserMainActivity extends AppCompatActivity
                 //create your task fragment
                 setTitle("Create a UserTask");
                 CreateTaskFragment createTaskFragment = new CreateTaskFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container_main, createTaskFragment).commit();
+
+                fragmentManager.beginTransaction().replace(R.id.fragment_main, createTaskFragment).commit();
                 fab.hide();
             }
         });
@@ -191,7 +193,7 @@ public class UserMainActivity extends AppCompatActivity
             setTitle("My Profile");
             MyProfileFragment profileFragment = new MyProfileFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_main, profileFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_main, profileFragment).commit();
 
         } else if (id == R.id.nav_task) {
 
@@ -200,7 +202,7 @@ public class UserMainActivity extends AppCompatActivity
             setTitle("Notifications");
             NotificationFragment notificationFragment = new NotificationFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_main, notificationFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_main, notificationFragment).commit();
 
         } else if (id == R.id.nav_account_settings) {
 

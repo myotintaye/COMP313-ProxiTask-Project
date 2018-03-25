@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TokenStore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -149,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<GetTokenResult> task) {
                                 if (task.isSuccessful()) {
                                     String idToken = task.getResult().getToken();
-                                    RetrofitInstance.setToken(idToken);
+                                    TokenStore.setToken(getApplicationContext(), idToken);
 
                                     Log.d("idToken", idToken);
                                 } else {
