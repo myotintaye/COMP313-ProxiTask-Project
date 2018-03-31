@@ -38,6 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.adapter.CustomBaseAdapter;
 import sample.example.com.proxitask.model.APIResponse;
 import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
@@ -63,7 +64,9 @@ public class UserMainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
 
         progressBar= findViewById(R.id.progressBar2);
+
         tasksListView = findViewById(R.id.list_all_tasks);
+
         taskAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
 
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
@@ -71,7 +74,7 @@ public class UserMainActivity extends AppCompatActivity
         buildDrawer();
 
         populateTasksListView();
-      //  progressBar.setVisibility(View.GONE);
+
     }
 
     private void populateTasksListView() {
@@ -79,13 +82,16 @@ public class UserMainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 List<UserTask> tasks = response.body().getData();
+                List<TaskItem> rowItems=new ArrayList<TaskItem>();
 
-                List<String> taskNames = new ArrayList<String>();
+
                 for (UserTask task : tasks) {
-                    taskNames.add(task.getTitle());
+
+                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getTaskDescription()));
                 }
-                taskAdapter.addAll(taskNames);
-                tasksListView.setAdapter(taskAdapter);
+                //taskAdapter.addAll(taskNames);
+                CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
+                tasksListView.setAdapter(customBaseAdapter);
                 progressBar.setVisibility(View.GONE);
             }
 
