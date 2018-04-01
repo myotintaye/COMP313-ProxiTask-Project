@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.List;
 
 import sample.example.com.proxitask.R;
@@ -26,7 +28,7 @@ public class CustomBaseAdapter extends BaseAdapter {
 
         /*private view holder class*/
         private class ViewHolder {
-            ImageView imageView;
+            RoundedImageView imageView;
             TextView txtTitle;
             TextView txtDesc;
         }
@@ -41,7 +43,7 @@ public class CustomBaseAdapter extends BaseAdapter {
                 holder = new ViewHolder();
                 holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
                 holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
-                holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+                holder.imageView = (RoundedImageView) convertView.findViewById(R.id.profile_pic);
                 convertView.setTag(holder);
             }
             else {
@@ -52,7 +54,7 @@ public class CustomBaseAdapter extends BaseAdapter {
 
             holder.txtDesc.setText(rowItem.getDesc());
             holder.txtTitle.setText(rowItem.getTitle());
-            holder.imageView.setImageResource(rowItem.getImageId());
+            //holder.imageView.setImageResource(rowItem.getImageId());
 
             return convertView;
         }

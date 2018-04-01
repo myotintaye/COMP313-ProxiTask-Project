@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/fui_idp_button_background_email"
-            android:contentDescription="John Doe"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_pic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@android:drawable/sym_def_app_icon"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher_foreground"
+        app:riv_border_color="#333333"
+        app:riv_border_width="2dip"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat" />
+
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toRightOf="@+id/profile_pic"
         android:paddingBottom="10dp"
+        android:paddingStart="20dp"
         android:textColor="#000000"
         android:textSize="16dp" />
 
@@ -27,9 +35,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toRightOf="@+id/profile_pic"
         android:paddingLeft="10dp"
+        android:paddingStart="20dp"
         android:textColor="#3399FF"
         android:textSize="14dp" />
 
-    </RelativeLayout>
+</RelativeLayout>

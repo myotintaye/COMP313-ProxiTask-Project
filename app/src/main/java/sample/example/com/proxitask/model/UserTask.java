@@ -21,6 +21,18 @@ public class UserTask {
     private String startTime;
     private String endTime;
 
+
+    public UserTask(String title, String taskDescription, double price, double lat, double lon, String address, String date,int radius) {
+        this.title = title;
+        this.taskDescription = taskDescription;
+        this.price = price;
+        this.lat = lat;
+        this.lon = lon;
+        this.address = address;
+        this.date = date;
+        this.radius=radius;
+    }
+
     public String getTitle() {
         return title;
     }
