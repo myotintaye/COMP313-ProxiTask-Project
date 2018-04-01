@@ -8,7 +8,7 @@
     android:paddingEnd="10dp"
     android:paddingStart="20dp"
     android:paddingTop="10dp"
-    tools:context="sample.example.com.proxitask.CreateTaskFragment">
+    tools:context="sample.example.com.proxitask.activity.CreateTaskFragment">
 
     <EditText
         android:id="@+id/edt_task_title"

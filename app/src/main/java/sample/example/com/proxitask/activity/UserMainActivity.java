@@ -3,12 +3,9 @@ package sample.example.com.proxitask.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,7 +29,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +43,7 @@ import sample.example.com.proxitask.network.TokenStore;
 
 public class UserMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NotificationFragment.OnFragmentInteractionListener,
-        MyProfileFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener {
+        MyProfileFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener,DisplayCreatedTaskFragment.OnFragmentInteractionListener {
 
     FragmentManager fragmentManager;
     TaskService taskService;
@@ -87,7 +83,7 @@ public class UserMainActivity extends AppCompatActivity
 
                 for (UserTask task : tasks) {
 
-                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getTaskDescription()));
+                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
                 }
                 //taskAdapter.addAll(taskNames);
                 CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);

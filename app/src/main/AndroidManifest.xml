@@ -33,6 +33,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value=""/>
         <activity android:name=".activity.MyProfileActivity" />
         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.NotificationActivity"></activity>

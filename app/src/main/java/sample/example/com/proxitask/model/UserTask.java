@@ -9,7 +9,7 @@ public class UserTask {
     @SerializedName("user_email")
     private String userEmail;
     private String title;
-    private String taskDescription;
+    private String description;
     private String subTitle;
     private double price;
     private double lat;
@@ -24,7 +24,7 @@ public class UserTask {
 
     public UserTask(String title, String taskDescription, double price, double lat, double lon, String address, String date,int radius) {
         this.title = title;
-        this.taskDescription = taskDescription;
+        this.description = taskDescription;
         this.price = price;
         this.lat = lat;
         this.lon = lon;
@@ -57,12 +57,12 @@ public class UserTask {
         this.userEmail = userEmail;
     }
 
-    public String getTaskDescription() {
-        return taskDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSubTitle() {

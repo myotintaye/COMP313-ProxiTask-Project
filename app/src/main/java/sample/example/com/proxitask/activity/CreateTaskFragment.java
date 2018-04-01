@@ -5,23 +5,18 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
-import sample.example.com.proxitask.adapter.CustomBaseAdapter;
-import sample.example.com.proxitask.model.APIResponse;
 import sample.example.com.proxitask.model.APISingleResponse;
 import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
@@ -116,6 +111,7 @@ public class CreateTaskFragment extends Fragment {
               UserTask task = response.body().getData();
                 Toast.makeText(getContext(),"Task "+task.getTitle()+" is saved!",Toast.LENGTH_LONG).show();
 
+                showCreatedTask(task);
 
             }
 
@@ -124,6 +120,22 @@ public class CreateTaskFragment extends Fragment {
                 Toast.makeText(getContext(),"Call failed",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void showCreatedTask(UserTask task) {
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        DisplayCreatedTaskFragment mfragment=new DisplayCreatedTaskFragment();
+
+        Bundle bundle=new Bundle();
+        bundle.putString("title",task.getTitle());
+        bundle.putString("desc",task.getDescription());
+        bundle.putDouble("price",task.getPrice());
+        bundle.putString("date",task.getDate());
+        bundle.putString("address",task.getAddress());
+        bundle.putInt("radius",task.getRadius());
+        mfragment.setArguments(bundle); //data being send to SecondFragment
+        transaction.replace(R.id.fragment_main, mfragment);
+        transaction.commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
