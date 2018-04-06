@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    tools:context="sample.example.com.proxitask.activity.DisplayCreatedTaskFragment">
+    tools:context=".activity.DisplayTaskDetailFragment">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -14,6 +15,17 @@
 
         <TextView
             style="@style/txtTitleH1"
+            android:id="@+id/txt_task_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="20dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            style="@style/txtFieldValue"
             android:id="@+id/txt_task_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,36 +67,36 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <RelativeLayout
-                style="layoutField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:paddingTop="10dp">
+            <!--<RelativeLayout-->
+                <!--style="layoutField"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:paddingTop="10dp">-->
 
-                <ImageView
-                    android:id="@+id/date"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/ic_calender" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/date"-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:background="@drawable/ic_calender" />-->
 
-                <TextView
-                    android:id="@+id/txt_date"
-                    style="@style/txtFieldValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/date"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textAppearance="@style/TextAppearance.AppCompat" />
-            </RelativeLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_date"-->
+                    <!--style="@style/txtFieldValue"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_toEndOf="@+id/date"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="TextView"-->
+                    <!--android:textAppearance="@style/TextAppearance.AppCompat" />-->
+            <!--</RelativeLayout>-->
 
 
             <RelativeLayout

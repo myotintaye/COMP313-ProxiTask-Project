@@ -75,7 +75,9 @@ public class CreateTaskFragment extends Fragment {
         rewards = v.findViewById(R.id.edt_reward);
         date = v.findViewById(R.id.edt_date);
         address = v.findViewById(R.id.edt_address);
-        km = v.findViewById(R.id.edt_km);
+//        km = v.findViewById(R.id.edt_km);
+
+
 
         btnCreateTask = v.findViewById(R.id.btn_save_task);
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
@@ -91,7 +93,10 @@ public class CreateTaskFragment extends Fragment {
                 Double longitude =  -79.23051763300265;
                 Double latitude =43.78443607023798;
                 String taskAddress = address.getText().toString();
-                int radius = Integer.parseInt(km.getText().toString() );
+
+                /* use system settings instead */
+//                int radius = Integer.parseInt(km.getText().toString() );
+                int radius = 5;
 
                 UserTask task = new UserTask(taskTitle,taskDesc,price,latitude,longitude,taskAddress,taskDate,radius);
 
