@@ -162,6 +162,14 @@
         </LinearLayout>
 
 
+        <Button
+            style="@style/btnPrimary"
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Apply for the task" />
+
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"

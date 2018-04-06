@@ -115,7 +115,7 @@ public class UserMainActivity extends AppCompatActivity
 
                         DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
                         displayTaskDetailfragment.setArguments(bundle);
-                        
+
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
 

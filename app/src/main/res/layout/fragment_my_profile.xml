@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="address address address address address " />
+                android:text="411 Duplex Ave, Toronto, ON" />
         </LinearLayout>
 
         <LinearLayout
