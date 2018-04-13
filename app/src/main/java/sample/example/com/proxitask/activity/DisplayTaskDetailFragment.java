@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import sample.example.com.proxitask.R;
-import sample.example.com.proxitask.model.UserTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,7 +155,7 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
             public void onClick(View v) {
 
                 String taskId = bundle.getString("taskId");
-                applyTask(taskId);
+//                applyTask(taskId);
             }
         });
 

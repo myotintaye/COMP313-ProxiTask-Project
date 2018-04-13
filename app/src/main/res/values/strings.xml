@@ -7,6 +7,7 @@
     <string name="btn_create_my_account">Create my account</string>
     <string name="btn_login">Login</string>
     <string name="btn_save_task">Save Task</string>
+    <string name="btn_discard_notification">Discard</string>
 
     <!--Links-->
     <string name="lnk_back_to_login"><u>Already have an account?Back to Login</u></string>

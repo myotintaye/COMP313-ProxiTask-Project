@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sample.example.com.proxitask">
 
-    <!--Internet Permission-->
+    <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -34,13 +34,13 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="API Key" />
+            android:value="API Key in Google Doc" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value=""/>
-
+        <activity android:name=".activity.MyProfileActivity" />
         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.NotificationActivity_NotUsed" />
         <activity android:name=".activity.MyTasksActivity_NotUsed" />
+
     </application>
 
 </manifest>
