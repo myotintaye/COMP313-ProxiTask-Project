@@ -89,6 +89,40 @@ public class UserMainActivity extends AppCompatActivity
                 CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
                 tasksListView.setAdapter(customBaseAdapter);
                 progressBar.setVisibility(View.GONE);
+
+                for (UserTask task : tasks) {
+
+                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
+                }
+                //taskAdapter.addAll(taskNames);
+                CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
+                tasksListView.setAdapter(customBaseAdapter);
+                progressBar.setVisibility(View.GONE);
+
+                /* set onClick */
+                tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                    public void onItemClick(AdapterView<?> adapter, View v, int position, long arg){
+
+                        UserTask task = tasks.get(position);
+
+                        Bundle bundle=new Bundle();
+                        bundle.putString("title",task.getTitle());
+                        bundle.putString("desc",task.getDescription());
+                        bundle.putDouble("price",task.getPrice());
+                        bundle.putString("date",task.getDate());
+                        bundle.putString("address",task.getAddress());
+                        bundle.putInt("radius",task.getRadius());
+
+                        DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
+                        displayTaskDetailfragment.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
+
+                        fab.hide();
+                    }
+                });
             }
 
             @Override

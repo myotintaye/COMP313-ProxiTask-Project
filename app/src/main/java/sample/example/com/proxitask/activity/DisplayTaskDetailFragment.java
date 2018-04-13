@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.UserTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +33,7 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
     private OnFragmentInteractionListener mListener;
     MapView mapView;
+    Button btnApplyTask;
 
     public DisplayTaskDetailFragment() {
         // Required empty public constructor
@@ -79,6 +82,7 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
         TextView address = view.findViewById(R.id.txt_address);
         TextView radius = view.findViewById(R.id.txt_radius);
+
 
         String taskTitle = "placeholder";
         String taskDesc = "placeholder";
@@ -144,6 +148,18 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
         address.setText(taskAddress);
         radius.setText(taskRadius + "");
+
+        btnApplyTask = view.findViewById(R.id.btn_apply_task);
+
+        btnApplyTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String taskId = bundle.getString("taskId");
+                applyTask(taskId);
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
