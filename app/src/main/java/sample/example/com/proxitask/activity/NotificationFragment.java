@@ -3,12 +3,29 @@ package sample.example.com.proxitask.activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import sample.example.com.proxitask.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import sample.example.com.proxitask.model.APINotificationResponse;
+import sample.example.com.proxitask.model.MsgToken;
+import sample.example.com.proxitask.model.NotificationBean;
+import sample.example.com.proxitask.network.NotificationService;
+import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TokenStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +44,10 @@ public class NotificationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListView listView;
+    private NotificationAdapter notificationAdapter;
+    private List<NotificationBean> data;
+    private NotificationService notificationService;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,6 +80,8 @@ public class NotificationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        notificationService = RetrofitInstance.getRetrofitInstance().create(NotificationService.class);
+        data = new ArrayList<>();
     }
 
     @Override
@@ -67,6 +90,34 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_notification, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listView = view.findViewById(R.id.list_view_notification);
+        notificationAdapter = new NotificationAdapter(getActivity());
+        listView.setAdapter(notificationAdapter);
+    }
+
+    private void loadData(String msgToken)
+    {
+        notificationService.getNotification(TokenStore.getToken(getContext()),new MsgToken(msgToken)).enqueue(new Callback<APINotificationResponse>() {
+            @Override
+            public void onResponse(Call<APINotificationResponse> call, Response<APINotificationResponse> response) {
+                NotificationBean bean = response.body().getData();
+                data.add(bean);
+                notificationAdapter.setData(data);
+                Toast.makeText(getContext(),"Call Succeed !",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<APINotificationResponse> call, Throwable t) {
+                Toast.makeText(getContext(),"Call failed",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -105,5 +156,65 @@ public class NotificationFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+
+    /*adapter for ListView */
+    class NotificationAdapter extends BaseAdapter
+    {
+        private LayoutInflater inflater;
+        private List<NotificationBean> data= new ArrayList<>();
+
+        public NotificationAdapter(Context context)
+        {
+            inflater = LayoutInflater.from(context);
+        }
+
+        public void setData(List<NotificationBean> data)
+        {
+            this.data = data;
+            notifyDataSetChanged();
+        }
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return data.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            NotificationViewHolder  viewHolder = null;
+            NotificationBean bean = (NotificationBean) getItem(i);
+            if(view == null)
+            {
+                 view = inflater.inflate(R.layout.item_notification_list,null);
+                 viewHolder = new NotificationViewHolder();
+                 viewHolder.tvTitle = view.findViewById(R.id.tv_title);
+                 viewHolder.tvMessage = view.findViewById(R.id.tv_message);
+                 view.setTag(viewHolder);
+            }
+            else
+            {
+                viewHolder = (NotificationViewHolder) view.getTag();
+            }
+            viewHolder.tvTitle.setText(bean.getTitle());
+            viewHolder.tvMessage.setText(bean.getMessage());
+            return view;
+        }
+    }
+    class NotificationViewHolder
+    {
+        TextView tvTitle;
+        TextView tvMessage;
     }
 }

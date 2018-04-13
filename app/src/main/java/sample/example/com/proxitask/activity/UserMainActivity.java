@@ -5,8 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,8 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,15 +42,8 @@ import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
 
 public class UserMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        NotificationFragment.OnFragmentInteractionListener,
-        MyProfileFragment.OnFragmentInteractionListener,
-        CreateTaskFragment.OnFragmentInteractionListener,
-        DisplayCreatedTaskFragment.OnFragmentInteractionListener,
-        DisplayTaskDetailFragment.OnFragmentInteractionListener,
-        MyTasksFragment.OnFragmentInteractionListener,
-        AccountSettingsFragment.OnFragmentInteractionListener
-{
+        implements NavigationView.OnNavigationItemSelectedListener, NotificationFragment.OnFragmentInteractionListener,
+        MyProfileFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener,DisplayCreatedTaskFragment.OnFragmentInteractionListener {
 
     FragmentManager fragmentManager;
     TaskService taskService;
@@ -88,45 +80,16 @@ public class UserMainActivity extends AppCompatActivity
                 List<UserTask> tasks = response.body().getData();
                 List<TaskItem> rowItems=new ArrayList<TaskItem>();
 
-                if (tasks != null){
-                    for (UserTask task : tasks) {
 
-                        rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
-                    }
-                    //taskAdapter.addAll(taskNames);
-                    CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
-                    tasksListView.setAdapter(customBaseAdapter);
-                    progressBar.setVisibility(View.GONE);
+                for (UserTask task : tasks) {
 
-                    /* set onClick */
-                    tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-                        public void onItemClick(AdapterView<?> adapter, View v, int position, long arg){
-
-                            UserTask task = tasks.get(position);
-
-                            Bundle bundle=new Bundle();
-                            bundle.putString("title",task.getTitle());
-                            bundle.putString("desc",task.getDescription());
-                            bundle.putDouble("price",task.getPrice());
-                            bundle.putString("date",task.getDate());
-                            bundle.putString("address",task.getAddress());
-                            bundle.putInt("radius",task.getRadius());
-
-                            DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
-                            displayTaskDetailfragment.setArguments(bundle);
-
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
-
-                            fab.hide();
-                        }
-                    });
+                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
                 }
-
-
+                //taskAdapter.addAll(taskNames);
+                CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
+                tasksListView.setAdapter(customBaseAdapter);
+                progressBar.setVisibility(View.GONE);
             }
-
 
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
@@ -144,7 +107,7 @@ public class UserMainActivity extends AppCompatActivity
 //                Snackbar.make(view, "Create your task!", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 //create your task fragment
-                setTitle("Create a Task");
+                setTitle("Create a UserTask");
                 CreateTaskFragment createTaskFragment = new CreateTaskFragment();
 
                 fragmentManager.beginTransaction().replace(R.id.fragment_main, createTaskFragment).commit();
@@ -223,9 +186,8 @@ public class UserMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(this, UserMainActivity.class);
-            startActivity(intent);
-
+            // Handle the camera action
+            fab.show();
         } else if (id == R.id.nav_inbox) {
 
         } else if (id == R.id.nav_profile) {
@@ -235,15 +197,8 @@ public class UserMainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_main, profileFragment).commit();
 
-            fab.hide();
-
         } else if (id == R.id.nav_task) {
-            setTitle("My Tasks");
-            MyTasksFragment myTasksFragment = new MyTasksFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_main, myTasksFragment).commit();
 
-            fab.hide();
 
         } else if (id == R.id.nav_noti) {
             setTitle("Notifications");
@@ -251,15 +206,8 @@ public class UserMainActivity extends AppCompatActivity
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_main, notificationFragment).commit();
 
-            fab.hide();
-
         } else if (id == R.id.nav_account_settings) {
-            setTitle("Account Settings");
-            AccountSettingsFragment accountSettingsFragment = new AccountSettingsFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragment_main, accountSettingsFragment).commit();
 
-            fab.hide();
         } else if (id == R.id.nav_logout) {
             AuthUI.getInstance()
                     .signOut(this)
