@@ -37,7 +37,7 @@
             android:value="API Key" />
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value=""/>
-        
+
         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.NotificationActivity_NotUsed" />
         <activity android:name=".activity.MyTasksActivity_NotUsed" />
