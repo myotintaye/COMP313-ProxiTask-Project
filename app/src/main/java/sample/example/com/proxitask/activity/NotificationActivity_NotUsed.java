@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import sample.example.com.proxitask.R;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity_NotUsed extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
