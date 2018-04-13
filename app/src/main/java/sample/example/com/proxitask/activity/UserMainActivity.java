@@ -119,6 +119,33 @@ public class UserMainActivity extends AppCompatActivity
 
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
+=======
+                /* set onClick */
+                tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                    public void onItemClick(AdapterView<?> adapter, View v, int position, long arg){
+
+                        UserTask task = tasks.get(position);
+
+                        Bundle bundle=new Bundle();
+                        bundle.putString("title",task.getTitle());
+                        bundle.putString("desc",task.getDescription());
+                        bundle.putDouble("price",task.getPrice());
+                        bundle.putString("date",task.getDate());
+                        bundle.putString("address",task.getAddress());
+                        bundle.putInt("radius",task.getRadius());
+
+                        DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
+                        displayTaskDetailfragment.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
+
+                        fab.hide();
+                    }
+                });
+            }
+>>>>>>> parent of 9c01420... Release 1 code freeze
 
                         fab.hide();
                     }
