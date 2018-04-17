@@ -45,5 +45,9 @@
     <string name="txt_phone_number">Enter your phone number</string>
     <string name="txt_within_km">Within how many kms</string>
 
+    <!--Tabs-->
+    <string name="tab_to_do">Works to do</string>
+    <string name="tab_posted">Posted tasks</string>
+    <string name="tab_completed">Completed</string>
 
 </resources>
