@@ -16,10 +16,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import sample.example.com.proxitask.R;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.model.APINotificationResponse;
 import sample.example.com.proxitask.model.MsgToken;
 import sample.example.com.proxitask.model.NotificationBean;

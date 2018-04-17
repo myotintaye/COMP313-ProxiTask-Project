@@ -21,8 +21,11 @@ public class UserTask {
     private String startTime;
     private String endTime;
 
+    @SerializedName("_id")
+    private String taskId;
 
-    public UserTask(String title, String taskDescription, double price, double lat, double lon, String address, String date,int radius) {
+
+    public UserTask(String title, String taskDescription, double price, double lat, double lon, String address, String date, int radius) {
         this.title = title;
         this.description = taskDescription;
         this.price = price;
@@ -30,7 +33,8 @@ public class UserTask {
         this.lon = lon;
         this.address = address;
         this.date = date;
-        this.radius=radius;
+        this.radius = radius;
+        this.taskId = taskId;
     }
 
     public String getTitle() {
@@ -135,6 +139,14 @@ public class UserTask {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }
 

@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,7 +19,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.APISingleResponse;
+import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TaskService;
+import sample.example.com.proxitask.network.TokenStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +40,10 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
     private OnFragmentInteractionListener mListener;
     MapView mapView;
+    Button btnApplyTask;
+
+    private String taskId;
+    private TaskService taskService;
 
     public DisplayTaskDetailFragment() {
         // Required empty public constructor
@@ -52,6 +65,8 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
+
         Bundle bundle = getArguments();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_display_task_detail, container, false);
@@ -67,7 +82,6 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
         return view;
     }
 
-
     private void populateForm(View view) {
         Bundle bundle = getArguments();
         TextView title = view.findViewById(R.id.txt_task_title);
@@ -80,6 +94,7 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
         TextView address = view.findViewById(R.id.txt_address);
         TextView radius = view.findViewById(R.id.txt_radius);
 
+
         String taskTitle = "placeholder";
         String taskDesc = "placeholder";
         String taskTime = "placeholder";
@@ -87,8 +102,6 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
         double taskPrice = 1.0;
 
         if (bundle != null){
-
-
             if (bundle.getString("title") != null){
                 taskTitle = bundle.getString("title");
             }
@@ -144,6 +157,37 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
         address.setText(taskAddress);
         radius.setText(taskRadius + "");
+
+        btnApplyTask = view.findViewById(R.id.btn_apply_task);
+
+        btnApplyTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                taskId = bundle.getString("taskId");
+                applyTask(taskId);
+            }
+        });
+
+    }
+
+    public void applyTask(String taskId){
+        taskService.applyTask(TokenStore.getToken(getContext()), taskId).enqueue(new Callback<APISingleResponse>() {
+            @Override
+            public void onResponse(Call<APISingleResponse> call, Response<APISingleResponse> response) {
+                Toast.makeText(getContext(),"Task applied, please wait for task owner to review.",Toast.LENGTH_LONG).show();
+
+                /* Disable the color */
+                btnApplyTask.setText(getString(R.string.btn_apply_task_applied));
+                btnApplyTask.setBackgroundColor(getResources().getColor(R.color.colorGrey));
+                btnApplyTask.setEnabled(false);
+            }
+
+            @Override
+            public void onFailure(Call<APISingleResponse> call, Throwable t) {
+                Toast.makeText(getContext(),"There is something wrong. Please try again later.",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -113,7 +113,10 @@ public class CreateTaskFragment extends Fragment implements GoogleApiClient.OnCo
                 Double longitude =  location.longitude;
                 Double latitude = location.latitude;
                 String taskAddress = address.getText().toString();
-                int radius = Integer.parseInt(km.getText().toString());
+
+                /* use system settings instead */
+//                int radius = Integer.parseInt(km.getText().toString() );
+                int radius = 5;
 
                 UserTask task = new UserTask(taskTitle,taskDesc,price,latitude,longitude,taskAddress,taskDate,radius);
 

@@ -3,6 +3,7 @@
     android:id="@+id/fragment_notifications"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     tools:context="sample.example.com.proxitask.activity.NotificationFragment">
 
     <ListView

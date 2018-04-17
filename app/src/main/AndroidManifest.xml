@@ -44,6 +44,7 @@
 
 
         <activity android:name=".activity.EditProfileActivity" />
+
     </application>
 
 </manifest>
