@@ -112,6 +112,7 @@ public class UserMainActivity extends AppCompatActivity
                             bundle.putString("date",task.getDate());
                             bundle.putString("address",task.getAddress());
                             bundle.putInt("radius",task.getRadius());
+                            bundle.putString("taskId", task.getTaskId());
 
                             DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
                             displayTaskDetailfragment.setArguments(bundle);
@@ -123,7 +124,6 @@ public class UserMainActivity extends AppCompatActivity
                         }
                     });
                 }
-
 
             }
 

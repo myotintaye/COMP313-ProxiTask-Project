@@ -168,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Apply for the task" />
+            android:text="@string/btn_apply_task" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
