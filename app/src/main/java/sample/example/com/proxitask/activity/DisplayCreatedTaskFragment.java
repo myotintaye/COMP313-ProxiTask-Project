@@ -25,6 +25,7 @@ public class DisplayCreatedTaskFragment extends Fragment implements OnMapReadyCa
     private OnFragmentInteractionListener mListener;
     MapView mapView;
 
+    private double lat,lng;
 
     public DisplayCreatedTaskFragment() {
         // Required empty public constructor
@@ -52,15 +53,12 @@ public class DisplayCreatedTaskFragment extends Fragment implements OnMapReadyCa
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_display_created_task, container, false);
 
-
         populateForm(view);
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         // Gets to GoogleMap from the MapView and does initialization stuff
         mapView.getMapAsync(this);
-
-
         return view;
     }
 
@@ -79,6 +77,10 @@ public class DisplayCreatedTaskFragment extends Fragment implements OnMapReadyCa
         String taskDate = bundle.getString("date");
         String taskAddress = bundle.getString("address");
         int taskRadius = bundle.getInt("radius");
+
+        lat = bundle.getDouble("lat");
+        lng = bundle.getDouble("long");
+
 
         title.setText(taskTitle);
         desc.setText(taskDesc);
@@ -110,9 +112,9 @@ public class DisplayCreatedTaskFragment extends Fragment implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         // Updates the location and zoom of the MapView
         googleMap.getUiSettings().setZoomControlsEnabled(true);
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(43.1, -87.9)));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat,lng)));
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng), 50 );
         googleMap.moveCamera(cameraUpdate);
     }
 

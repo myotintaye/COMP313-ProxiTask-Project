@@ -1,6 +1,8 @@
 package sample.example.com.proxitask.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,9 +36,12 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sample.example.com.proxitask.Manifest;
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.adapter.CustomBaseAdapter;
 import sample.example.com.proxitask.model.APIResponse;
@@ -67,10 +75,15 @@ public class UserMainActivity extends AppCompatActivity
     ProgressBar  progressBar;
     FloatingActionButton fab;
 
+    Location location;
+    private FusedLocationProviderClient mFusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -80,16 +93,19 @@ public class UserMainActivity extends AppCompatActivity
 
         taskAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item);
 
+
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
         buildFAB();
         buildDrawer();
 
-        populateTasksListView();
+      //  populateTasksListView();
 
     }
 
     private void populateTasksListView() {
-        taskService.getAllTasks(TokenStore.getToken(this)).enqueue(new Callback<APIResponse>() {
+    if(this.location == null) return;
+
+        taskService.getNearbyTasks(TokenStore.getToken(this), this.location.getLatitude(), this.location.getLongitude()).enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 List<UserTask> tasks = response.body().getData();
@@ -191,6 +207,7 @@ public class UserMainActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -287,5 +304,9 @@ public class UserMainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
