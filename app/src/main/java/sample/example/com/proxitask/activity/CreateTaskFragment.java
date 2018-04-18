@@ -83,7 +83,7 @@ public class CreateTaskFragment extends Fragment implements GoogleApiClient.OnCo
         desc = v.findViewById(R.id.edt_task_decrription);
         rewards = v.findViewById(R.id.edt_reward);
         date = v.findViewById(R.id.edt_date);
-        km = v.findViewById(R.id.edt_km);
+//        km = v.findViewById(R.id.edt_km);
 
         btnCreateTask = v.findViewById(R.id.btn_save_task);
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
