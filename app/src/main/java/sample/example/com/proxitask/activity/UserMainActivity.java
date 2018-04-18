@@ -36,13 +36,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.activity.myProfile.MyProfileFragment;
 import sample.example.com.proxitask.adapter.CustomBaseAdapter;
 import sample.example.com.proxitask.model.APIResponse;
 import sample.example.com.proxitask.model.UserTask;
-import sample.example.com.proxitask.myTasks.MyTasksCompletedFragment;
-import sample.example.com.proxitask.myTasks.MyTasksFragment;
-import sample.example.com.proxitask.myTasks.MyTasksPostedFragment;
-import sample.example.com.proxitask.myTasks.MyTasksToDoFragment;
+import sample.example.com.proxitask.activity.myTasks.MyTasksCompletedFragment;
+import sample.example.com.proxitask.activity.myTasks.MyTasksFragment;
+import sample.example.com.proxitask.activity.myTasks.MyTasksPostedFragment;
+import sample.example.com.proxitask.activity.myTasks.MyTasksToDoFragment;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
@@ -88,7 +89,7 @@ public class UserMainActivity extends AppCompatActivity
         buildFAB();
         buildDrawer();
 
-      //  populateTasksListView();
+        populateTasksListView();
 
     }
 

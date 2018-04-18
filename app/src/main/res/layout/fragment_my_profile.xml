@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    tools:context="sample.example.com.proxitask.activity.MyProfileFragment">
+    tools:context="sample.example.com.proxitask.activity.myProfile.MyProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,6 +25,7 @@
                 android:src="@drawable/ico_avatar" />
 
             <TextView
+                android:id="@+id/txt_username_myprofile"
                 style="@style/txtTitleH1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_points_myprofile"
                     style="@style/txtBigFigure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,6 +70,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_num_of_completed_tasks_myprofile"
                     style="@style/txtBigFigure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,6 +93,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_num_of_posted_tasks_myprofile"
                     style="@style/txtBigFigure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,6 +129,7 @@
                 android:src="@drawable/ico_location" />
 
             <TextView
+                android:id="@+id/txt_address_myprofile"
                 style="@style/txtFieldValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,6 +151,7 @@
                 android:src="@drawable/ico_email" />
 
             <TextView
+                android:id="@+id/txt_email_myprofile"
                 style="@style/txtFieldValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,6 +173,7 @@
                 android:src="@drawable/ico_telephone" />
 
             <TextView
+                android:id="@+id/txt_phone_myprofile"
                 style="@style/txtFieldValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

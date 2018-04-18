@@ -1,4 +1,4 @@
-package sample.example.com.proxitask.myTasks;
+package sample.example.com.proxitask.activity.myProfile;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,18 +7,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.APIUserResponse;
+import sample.example.com.proxitask.model.User;
+import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TokenStore;
+import sample.example.com.proxitask.network.UserService;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksPostedFragment.OnFragmentInteractionListener} interface
+ * {@link MyProfileFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksPostedFragment#newInstance} factory method to
+ * Use the {@link MyProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksPostedFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,9 +39,14 @@ public class MyTasksPostedFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private User user;
+    private UserService userService;
+
+
+
     private OnFragmentInteractionListener mListener;
 
-    public MyTasksPostedFragment() {
+    public MyProfileFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +56,11 @@ public class MyTasksPostedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksPostedFragment.
+     * @return A new instance of fragment MyProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksPostedFragment newInstance(String param1, String param2) {
-        MyTasksPostedFragment fragment = new MyTasksPostedFragment();
+    public static MyProfileFragment newInstance(String param1, String param2) {
+        MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,8 +80,49 @@ public class MyTasksPostedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_tasks_posted, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
+
+        /* Get user info */
+        userService.getUser(TokenStore.getToken(getContext())).enqueue(new Callback<APIUserResponse>() {
+            @Override
+            public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
+                String test = response.body().toString();
+                user = response.body().getUser();
+
+                if (user != null){
+
+                    /* Load the UI */
+                    TextView username = view.findViewById(R.id.txt_username_myprofile);
+                    TextView address = view.findViewById(R.id.txt_address_myprofile);
+
+                    checkAndSetText(username, user.getUserName());
+                    checkAndSetText(address, user.getEmail());
+
+                    TextView completedTasks = view.findViewById(R.id.txt_num_of_completed_tasks_myprofile);
+//                    completedTasks.setText(user.getTaskCompleted().length);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIUserResponse> call, Throwable t) {
+                Toast.makeText(getContext(),"Having troubles in pulling user data. Please try again later.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
+    }
+
+    private void checkAndSetText(TextView t, String value){
+        if (value != null){
+            t.setText(value);
+        }
+        else{
+            t.setText("null");
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

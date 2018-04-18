@@ -1,14 +1,15 @@
 package sample.example.com.proxitask.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -24,9 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.APIUserResponse;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TokenStore;
+import sample.example.com.proxitask.network.UserService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
+    private UserService userService;
+
     //Button
     private Button btnCreateAccount;
     private Button btnAccountLogin;
@@ -54,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
 
         btnSignInWithGoogle = findViewById(R.id.sign_in_with_google);
         btnCreateAccount = findViewById(R.id.btn_create_account);
@@ -128,6 +138,17 @@ public class LoginActivity extends AppCompatActivity {
                             {
                                 Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_LONG).show();
 
+                                /* call login API */
+                                userService.getLogin(TokenStore.getToken(getApplicationContext())).enqueue(new Callback<APIUserResponse>() {
+                                    @Override
+                                    public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<APIUserResponse> call, Throwable t) {
+                                    }
+                                });
                             }
                         }
                         else

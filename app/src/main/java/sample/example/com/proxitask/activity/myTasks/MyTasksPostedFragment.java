@@ -1,4 +1,4 @@
-package sample.example.com.proxitask.myTasks;
+package sample.example.com.proxitask.activity.myTasks;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,12 +13,12 @@ import sample.example.com.proxitask.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksToDoFragment.OnFragmentInteractionListener} interface
+ * {@link MyTasksPostedFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksToDoFragment#newInstance} factory method to
+ * Use the {@link MyTasksPostedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksToDoFragment extends Fragment {
+public class MyTasksPostedFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class MyTasksToDoFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public MyTasksToDoFragment() {
+    public MyTasksPostedFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class MyTasksToDoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksToDoFragment.
+     * @return A new instance of fragment MyTasksPostedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksToDoFragment newInstance(String param1, String param2) {
-        MyTasksToDoFragment fragment = new MyTasksToDoFragment();
+    public static MyTasksPostedFragment newInstance(String param1, String param2) {
+        MyTasksPostedFragment fragment = new MyTasksPostedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +65,7 @@ public class MyTasksToDoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_tasks_to_do, container, false);
+        return inflater.inflate(R.layout.fragment_my_tasks_posted, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

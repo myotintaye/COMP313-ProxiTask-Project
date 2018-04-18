@@ -22,7 +22,6 @@ public interface TaskService {
     @POST("task/add")
     Call<APISingleResponse> addTask(@Header("idToken") String authToken, @Body UserTask userTask);
 
-
     @FormUrlEncoded
     @POST("task/apply")
     Call<APISingleResponse> applyTask(
