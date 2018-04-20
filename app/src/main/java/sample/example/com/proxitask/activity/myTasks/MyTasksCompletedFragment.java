@@ -123,8 +123,6 @@ public class MyTasksCompletedFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
 

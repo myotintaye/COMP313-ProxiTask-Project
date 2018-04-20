@@ -105,8 +105,7 @@ public class MyTasksToDoFragment extends Fragment {
         TextView noTasks = view.findViewById(R.id.tv_notasks);
         noTasks.setEnabled(false);
 
-
-//        for testing
+//
 //        Task taskTest = new Task("taskid", "userid");;
 //        taskList.add(taskTest);
 //        taskList.add(taskTest);

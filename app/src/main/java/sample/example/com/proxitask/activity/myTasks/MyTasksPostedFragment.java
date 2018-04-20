@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
-import sample.example.com.proxitask.adapter.TaskToDoAdapter;
+import sample.example.com.proxitask.adapter.TaskPostedAdapter;
 import sample.example.com.proxitask.model.APIMyTasksResponse;
 import sample.example.com.proxitask.model.Task;
 import sample.example.com.proxitask.network.RetrofitInstance;
@@ -48,7 +48,7 @@ public class MyTasksPostedFragment extends Fragment {
 
 
     private RecyclerView recyclerView;
-    private TaskToDoAdapter adapter;
+    private TaskPostedAdapter adapter;
     private List<Task> taskList;
 
     private TaskService taskService;
@@ -107,7 +107,7 @@ public class MyTasksPostedFragment extends Fragment {
                 taskList = response.body().getTaskList();
 
                 if (taskList != null){
-                    adapter = new TaskToDoAdapter(getContext(), taskList);
+                    adapter = new TaskPostedAdapter(getContext(), taskList);
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(adapter);
