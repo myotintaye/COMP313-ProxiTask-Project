@@ -12,6 +12,9 @@
     <string name="btn_apply_task">Apply for the task</string>
     <string name="btn_apply_task_applied">Task applied</string>
 
+    <string name="btn_navigate">Navigate</string>
+    <string name="btn_call">Call</string>
+
     <!--Links-->
     <string name="lnk_back_to_login"><u>Already have an account?Back to Login</u></string>
     <string name="lnk_createaccound"><u>Doesn\'t have an account?Create now</u></string>
@@ -33,6 +36,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--Placeholders-->
+    <string name="ph_no_tasks_hired">It seems you are not hired on any tasks.</string>
+    <string name="ph_no_tasks_posted">It seems you have not created any tasks yet.</string>
+    <string name="ph_no_tasks_completed">It seems you have not completed any tasks yet.</string>
+
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

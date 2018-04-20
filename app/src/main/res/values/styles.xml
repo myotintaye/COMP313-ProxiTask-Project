@@ -22,7 +22,7 @@
     </style>
 
     <!--Buttons-->
-    <style name="btnPrimary">
+    <style name="btnPrimaryLarge">
         <item name="android:fontFamily">@font/open_sans_light</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorLight</item>
@@ -31,9 +31,49 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:layout_width">@dimen/btn_width</item>
         <item name="android:layout_height">@dimen/btn_height</item>
-        <item name="android:paddingLeft">@dimen/padding_button</item>
-        <item name="android:paddingRight">@dimen/padding_button</item>S
+        <item name="android:paddingLeft">@dimen/padding_button_h</item>
+        <item name="android:paddingRight">@dimen/padding_button_h</item>S
     </style>
+
+    <style name="btnPrimaryLineLarge">
+        <item name="android:fontFamily">@font/open_sans_light</item>
+        <item name="android:textSize">@dimen/font_size</item>
+        <item name="android:background">@drawable/btn_primary_line</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">@dimen/padding_button_h</item>
+        <item name="android:paddingRight">@dimen/padding_button_h</item>
+    </style>
+
+    <style name="btnPrimary">
+        <item name="android:fontFamily">@font/open_sans_light</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">@dimen/padding_button_w</item>
+        <item name="android:paddingRight">@dimen/padding_button_w</item>
+        <item name="android:paddingTop">@dimen/padding_button_h</item>
+        <item name="android:paddingBottom">@dimen/padding_button_h</item>
+    </style>
+
+    <style name="btnPrimaryLine">
+        <item name="android:fontFamily">@font/open_sans_light</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:background">@drawable/btn_primary_line</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">@dimen/padding_button_w</item>
+        <item name="android:paddingRight">@dimen/padding_button_w</item>
+        <item name="android:paddingTop">@dimen/padding_button_h</item>
+        <item name="android:paddingBottom">@dimen/padding_button_h</item>
+    </style>
+
 
     <style name="btnDark">
         <item name="android:fontFamily">@font/open_sans_light</item>
@@ -44,17 +84,8 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:layout_width">@dimen/btn_width</item>
         <item name="android:layout_height">@dimen/btn_height</item>
-        <item name="android:paddingLeft">@dimen/padding_button</item>
-        <item name="android:paddingRight">@dimen/padding_button</item>
-    </style>
-
-    <style name="btnPrimaryLine">
-        <item name="android:fontFamily">@font/open_sans_light</item>
-        <item name="android:textSize">@dimen/font_size</item>
-        <item name="android:background">@drawable/btn_primary_line</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:paddingLeft">@dimen/padding_button</item>
-        <item name="android:paddingRight">@dimen/padding_button</item>
+        <item name="android:paddingLeft">@dimen/padding_button_w</item>
+        <item name="android:paddingRight">@dimen/padding_button_w</item>
     </style>
 
 
@@ -64,6 +95,13 @@
         <item name="android:fontFamily">@font/open_sans_light</item>
         <item name="android:textSize">@dimen/font_size_big</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="txtNoContents">
+        <item name="android:fontFamily">@font/open_sans_light</item>
+        <item name="android:textSize">@dimen/font_size_big</item>
+        <item name="android:textColor">@color/colorDark</item>
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -11,7 +11,9 @@
     <dimen name="font_size_big">24sp</dimen>
     <dimen name="font_size_huge">24sp</dimen>
 
-    <dimen name="padding_button">30dp</dimen>
+    <dimen name="padding_button_large">30dp</dimen>
+    <dimen name="padding_button_w">20dp</dimen>
+    <dimen name="padding_button_h">6dp</dimen>
     <dimen name="padding_radiobutton">4dp</dimen>
     <dimen name="padding_list">10dp</dimen>
     <dimen name="padding_field">20dp</dimen>
@@ -19,6 +21,8 @@
 
 
     <!--Buttons-->
-    <dimen name="btn_width">320dp</dimen>
-    <dimen name="btn_height">60dp</dimen>
+    <dimen name="btn_large_width">320dp</dimen>
+    <dimen name="btn_large_height">60dp</dimen>
+    <dimen name="btn_width">120dp</dimen>
+    <dimen name="btn_height">36dp</dimen>
 </resources>

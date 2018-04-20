@@ -90,7 +90,6 @@ public class MyProfileFragment extends Fragment {
         userService.getUser(TokenStore.getToken(getContext())).enqueue(new Callback<APIUserResponse>() {
             @Override
             public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
-                String test = response.body().toString();
                 user = response.body().getUser();
 
                 if (user != null){

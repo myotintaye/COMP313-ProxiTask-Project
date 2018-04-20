@@ -3,15 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
+    android:background="#F4F4F4"
     tools:context=".activity.myTasks.MyTasksToDoFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/tv_notasks"
+        style="@style/txtLabelSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/ph_no_tasks_hired"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_task_to_do"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/tab_to_do" />
+        android:layout_marginTop="90dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_task_applied"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"/>
 
 </FrameLayout>
