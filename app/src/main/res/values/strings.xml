@@ -44,8 +44,7 @@
     <string name="ph_no_tasks_hired">It seems you are not hired on any tasks.</string>
     <string name="ph_no_tasks_posted">It seems you have not created any tasks yet.</string>
     <string name="ph_no_tasks_completed">It seems you have not completed any tasks yet.</string>
-
-
+    <string name="ph_no_tasks_applied">It seems you have not applied any tasks yet.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

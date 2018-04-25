@@ -3,29 +3,38 @@ package sample.example.com.proxitask.activity.myTasks;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.adapter.TaskPostedAdapter;
+import sample.example.com.proxitask.model.APIMyTasksResponse;
+import sample.example.com.proxitask.model.Task;
+import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TaskService;
+import sample.example.com.proxitask.network.TokenStore;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksFragment.OnFragmentInteractionListener} interface
+ * {@link MyTasksAppliedFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksFragment#newInstance} factory method to
+ * Use the {@link MyTasksAppliedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksFragment extends Fragment {
+public class MyTasksAppliedFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,10 +46,14 @@ public class MyTasksFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
 
-    public MyTasksFragment() {
+    private RecyclerView recyclerView;
+    private TaskPostedAdapter adapter;
+    private List<Task> taskList;
+
+    private TaskService taskService;
+
+    public MyTasksAppliedFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +63,11 @@ public class MyTasksFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksFragment.
+     * @return A new instance of fragment MyTasksAppliedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksFragment newInstance(String param1, String param2) {
-        MyTasksFragment fragment = new MyTasksFragment();
+    public static MyTasksAppliedFragment newInstance(String param1, String param2) {
+        MyTasksAppliedFragment fragment = new MyTasksAppliedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,59 +86,44 @@ public class MyTasksFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_tasks, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_tasks_applied, container, false);
 
-        viewPager = view.findViewById(R.id.pageview_my_tasks);
-        setupViewPager(viewPager);
+        recyclerView = view.findViewById(R.id.recycler_view_task_applied);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
 
-        tabLayout = view.findViewById(R.id.tabbar_my_tasks);
-        tabLayout.setupWithViewPager(viewPager);
 
+        TextView noTasks = view.findViewById(R.id.tv_notasksApplied);
+        noTasks.setVisibility(View.INVISIBLE);
+
+        taskService.getMyAppliedTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
+            @Override
+            public void onResponse(Call<APIMyTasksResponse> call, Response<APIMyTasksResponse> response) {
+
+                taskList = response.body().getTaskList();
+
+                if (taskList != null){
+                    adapter = new TaskPostedAdapter(getContext(), taskList);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(adapter);
+                }
+                else{
+                    noTasks.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIMyTasksResponse> call, Throwable t) {
+                Toast.makeText(getContext(),"Having troubles in pulling task data. Please try again later.",Toast.LENGTH_LONG).show();
+            }
+        });
 
         return view;
+
     }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new MyTasksToDoFragment(), "To Do");
-        adapter.addFragment(new MyTasksAppliedFragment(), "Applied");
-        adapter.addFragment(new MyTasksPostedFragment(), "Posted");
-        adapter.addFragment(new MyTasksCompletedFragment(), "Completed");
-        viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

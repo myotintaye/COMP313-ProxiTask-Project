@@ -37,13 +37,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.activity.myProfile.MyProfileFragment;
-import sample.example.com.proxitask.adapter.CustomBaseAdapter;
-import sample.example.com.proxitask.model.APIResponse;
-import sample.example.com.proxitask.model.UserTask;
+import sample.example.com.proxitask.activity.myTasks.MyTasksAppliedFragment;
 import sample.example.com.proxitask.activity.myTasks.MyTasksCompletedFragment;
 import sample.example.com.proxitask.activity.myTasks.MyTasksFragment;
 import sample.example.com.proxitask.activity.myTasks.MyTasksPostedFragment;
 import sample.example.com.proxitask.activity.myTasks.MyTasksToDoFragment;
+import sample.example.com.proxitask.activity.myTasks.SelectCandidatesFragment;
+import sample.example.com.proxitask.adapter.CustomBaseAdapter;
+import sample.example.com.proxitask.model.APIResponse;
+import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
@@ -59,7 +61,9 @@ public class UserMainActivity extends AppCompatActivity
         MyTasksFragment.OnFragmentInteractionListener,
         MyTasksToDoFragment.OnFragmentInteractionListener,
         MyTasksPostedFragment.OnFragmentInteractionListener,
-        MyTasksCompletedFragment.OnFragmentInteractionListener
+        MyTasksCompletedFragment.OnFragmentInteractionListener,
+        MyTasksAppliedFragment.OnFragmentInteractionListener,
+        SelectCandidatesFragment.OnFragmentInteractionListener
 {
 
     FragmentManager fragmentManager;

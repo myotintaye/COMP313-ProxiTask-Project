@@ -1,6 +1,8 @@
 package sample.example.com.proxitask.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +13,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.activity.myTasks.SelectCandidatesFragment;
 import sample.example.com.proxitask.model.Task;
 
 public class TaskPostedAdapter extends RecyclerView.Adapter<TaskPostedAdapter.MyViewHolder> {
-
 
     private Context context;
     private List<Task> taskList;
@@ -75,14 +77,47 @@ public class TaskPostedAdapter extends RecyclerView.Adapter<TaskPostedAdapter.My
                 holder.address.setText(task.getAddress());
             }
 
+
+            if (task.getCandidates() != null){
+                String c;
+                if (task.getCandidates().length == 1){
+                   c = " candidate";
+                }
+                else {
+                    c = " candidates";
+                }
+                holder.candidates.setText(String.valueOf(task.getCandidates().length) + c);
+            }
+            else{
+                holder.candidates.setText("0 Candidates");
+            }
+
             holder.points.setText("Coins: " + String.valueOf(task.getPrice()));
 
             holder.btnAssign.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    /* call Google Map */
+
+                    Bundle bundle=new Bundle();
+                    bundle.putString("title",task.getTitle());
+                    bundle.putString("desc",task.getDescription());
+                    bundle.putDouble("price",task.getPrice());
+                    bundle.putString("date",task.getDate());
+                    bundle.putString("address",task.getAddress());
+                    bundle.putInt("radius",task.getRadius());
+                    bundle.putString("taskId", task.getTaskId());
+                    bundle.putStringArray("candidates", task.getCandidates());
+
+                    SelectCandidatesFragment candidatesFragment = new SelectCandidatesFragment();
+                    candidatesFragment.setArguments(bundle);
+
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, candidatesFragment).addToBackStack(null).commit();
                 }
             });
+
+
+
 
             holder.btnEdit.setOnClickListener(new View.OnClickListener(){
                 @Override

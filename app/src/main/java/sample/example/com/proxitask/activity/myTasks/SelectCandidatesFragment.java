@@ -3,29 +3,30 @@ package sample.example.com.proxitask.activity.myTasks;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.adapter.TaskCandidatesAdapter;
+import sample.example.com.proxitask.model.Task;
+import sample.example.com.proxitask.network.UserService;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksFragment.OnFragmentInteractionListener} interface
+ * {@link SelectCandidatesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksFragment#newInstance} factory method to
+ * Use the {@link SelectCandidatesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksFragment extends Fragment {
+public class SelectCandidatesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,10 +38,14 @@ public class MyTasksFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private RecyclerView recyclerView;
+    private TaskCandidatesAdapter adapter;
+    private List<Task> taskList;
 
-    public MyTasksFragment() {
+    private UserService userService;
+    private String[] candidates;
+
+    public SelectCandidatesFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +55,11 @@ public class MyTasksFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksFragment.
+     * @return A new instance of fragment SelectCandidatesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksFragment newInstance(String param1, String param2) {
-        MyTasksFragment fragment = new MyTasksFragment();
+    public static SelectCandidatesFragment newInstance(String param1, String param2) {
+        SelectCandidatesFragment fragment = new SelectCandidatesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,57 +80,25 @@ public class MyTasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_tasks, container, false);
 
-        viewPager = view.findViewById(R.id.pageview_my_tasks);
-        setupViewPager(viewPager);
+        Bundle bundle = getArguments();
+        candidates = bundle.getStringArray("candidates");
 
-        tabLayout = view.findViewById(R.id.tabbar_my_tasks);
-        tabLayout.setupWithViewPager(viewPager);
+        View view = inflater.inflate(R.layout.fragment_select_candidates, container, false);
+
+        recyclerView = view.findViewById(R.id.recycle_view_task_candidates);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+
+
+        adapter = new TaskCandidatesAdapter(getContext(), candidates);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
 
 
         return view;
     }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new MyTasksToDoFragment(), "To Do");
-        adapter.addFragment(new MyTasksAppliedFragment(), "Applied");
-        adapter.addFragment(new MyTasksPostedFragment(), "Posted");
-        adapter.addFragment(new MyTasksCompletedFragment(), "Completed");
-        viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
