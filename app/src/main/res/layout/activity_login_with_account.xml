@@ -53,8 +53,10 @@
         android:inputType="textPassword" />
 
     <Button
-        style="@style/btnDark"
         android:id="@+id/btn_login"
+        style="@style/btnDark"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
         android:layout_marginTop="70dp"
         android:onClick="signInWithEmail"
         android:text="@string/btn_login" />
