@@ -10,12 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
+import android.widget.TextView;
 
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.adapter.TaskCandidatesAdapter;
-import sample.example.com.proxitask.model.Task;
 import sample.example.com.proxitask.network.UserService;
 
 /**
@@ -40,10 +38,10 @@ public class SelectCandidatesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TaskCandidatesAdapter adapter;
-    private List<Task> taskList;
 
     private UserService userService;
     private String[] candidates;
+    private String taskId;
 
     public SelectCandidatesFragment() {
         // Required empty public constructor
@@ -83,18 +81,26 @@ public class SelectCandidatesFragment extends Fragment {
 
         Bundle bundle = getArguments();
         candidates = bundle.getStringArray("candidates");
+        taskId = bundle.getString("taskId");
+
+        /* Load top panel */
 
         View view = inflater.inflate(R.layout.fragment_select_candidates, container, false);
+
+        TextView title = view.findViewById(R.id.tv_task_title_tp);
+
+        title.setText(bundle.getString("title"));
+
+        /* Load listview */
 
         recyclerView = view.findViewById(R.id.recycle_view_task_candidates);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
 
 
-        adapter = new TaskCandidatesAdapter(getContext(), candidates);
+        adapter = new TaskCandidatesAdapter(getContext(), candidates, taskId);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
 
 
         return view;

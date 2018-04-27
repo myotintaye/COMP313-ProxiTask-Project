@@ -100,7 +100,7 @@ public class MyTasksPostedFragment extends Fragment {
         TextView noTasks = view.findViewById(R.id.tv_notasks);
         noTasks.setEnabled(false);
 
-        taskService.getMyHiredTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
+        taskService.getMyPostedTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
             @Override
             public void onResponse(Call<APIMyTasksResponse> call, Response<APIMyTasksResponse> response) {
 

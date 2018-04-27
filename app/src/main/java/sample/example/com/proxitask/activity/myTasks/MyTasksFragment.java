@@ -93,7 +93,7 @@ public class MyTasksFragment extends Fragment {
         adapter.addFragment(new MyTasksToDoFragment(), "To Do");
         adapter.addFragment(new MyTasksAppliedFragment(), "Applied");
         adapter.addFragment(new MyTasksPostedFragment(), "Posted");
-        adapter.addFragment(new MyTasksCompletedFragment(), "Completed");
+        adapter.addFragment(new MyTasksCompletedFragment(), "Done");
         viewPager.setAdapter(adapter);
     }
 

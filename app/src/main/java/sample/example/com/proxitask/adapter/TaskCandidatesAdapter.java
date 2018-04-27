@@ -1,6 +1,7 @@
 package sample.example.com.proxitask.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import retrofit2.Response;
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.model.APIUserResponse;
 import sample.example.com.proxitask.model.User;
+import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TokenStore;
 import sample.example.com.proxitask.network.UserService;
 
@@ -22,13 +24,14 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
 
     private Context context;
     private String[] candidates;
+    private String taskId;
 
     private UserService userService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         public TextView username, completed;
-        public Button btnAssign;
+        public Button btnHire;
 
         public MyViewHolder(View view){
             super(view);
@@ -36,21 +39,25 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
             username = (TextView) view.findViewById(R.id.tv_username);
             completed = (TextView) view.findViewById(R.id.tv_num_of_task_completed);
 
-            btnAssign = (Button) view.findViewById(R.id.btn_assign);
+            btnHire = (Button) view.findViewById(R.id.btn_hire);
 
         }
     }
 
 
-    public TaskCandidatesAdapter(Context context, String[] candidates){
+    public TaskCandidatesAdapter(Context context, String[] candidates, String taskId){
         this.context = context;
         this.candidates = candidates;
+        this.taskId = taskId;
+
+        userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
+
     }
 
     @Override
     public TaskCandidatesAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cardview_tasks_posted, parent, false);
+                .inflate(R.layout.listview_candidates, parent, false);
 
         return new TaskCandidatesAdapter.MyViewHolder(itemView);
     }
@@ -69,15 +76,57 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
                 /* Load the UI */
                 if (user != null){
 
-                    holder.username.setText(user.getUserName());
+                    String test = user.getUserName();
 
-                    holder.completed.setText(String.valueOf(user.getTaskCompleted().length));
+                    if (user.getUserName() != null){
+                        holder.username.setText(test);
+                    }
+                    else{
+                        holder.username.setText("Test User");
+                    }
 
-                    holder.btnAssign.setOnClickListener(new View.OnClickListener(){
+                    if (user.getTaskCompleted() != null){
+                        holder.completed.setText(String.valueOf(user.getTaskCompleted().length + " tasks completed"));
+                    }
+                    else{
+                        holder.completed.setText("0 tasks completed");
+                    }
+
+                    holder.btnHire.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View view){
 
                             /* Hire the candidate */
+//                            hireTask(taskId);
+
+                            /* Disable the button */
+
+                            holder.btnHire.setText("Hired");
+                            holder.btnHire.setBackgroundColor(Color.parseColor("#D2D2D2"));
+                            holder.btnHire.setEnabled(false);
+
+                        }
+                    });
+
+                }
+                else{
+                    /* cannot get the user, to be revised later */
+
+                    holder.username.setText("Test User");
+                    holder.completed.setText("0 tasks completed");
+
+                    holder.btnHire.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View view){
+
+                            /* Hire the candidate */
+//                            hireTask(taskId);
+
+                            /* Disable the button */
+
+                            holder.btnHire.setText("Hired");
+                            holder.btnHire.setBackgroundColor(Color.parseColor("#D2D2D2"));
+                            holder.btnHire.setEnabled(false);
 
                         }
                     });

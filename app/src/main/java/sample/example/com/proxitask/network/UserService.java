@@ -1,7 +1,6 @@
 package sample.example.com.proxitask.network;
 
 import retrofit2.Call;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
@@ -18,7 +17,6 @@ public interface UserService {
     Call<APIUserResponse> getUser(@Header("idToken") String authToken);
 
     /* Get user by id */
-    @FormUrlEncoded
     @GET("user/{user_id}")
     Call<APIUserResponse> getUserById(
             @Header("idToken") String authToken,

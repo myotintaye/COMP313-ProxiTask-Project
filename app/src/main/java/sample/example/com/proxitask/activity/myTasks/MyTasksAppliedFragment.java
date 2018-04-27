@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
-import sample.example.com.proxitask.adapter.TaskPostedAdapter;
+import sample.example.com.proxitask.adapter.TaskAppliedAdapter;
 import sample.example.com.proxitask.model.APIMyTasksResponse;
 import sample.example.com.proxitask.model.Task;
 import sample.example.com.proxitask.network.RetrofitInstance;
@@ -48,7 +48,7 @@ public class MyTasksAppliedFragment extends Fragment {
 
 
     private RecyclerView recyclerView;
-    private TaskPostedAdapter adapter;
+    private TaskAppliedAdapter adapter;
     private List<Task> taskList;
 
     private TaskService taskService;
@@ -86,7 +86,9 @@ public class MyTasksAppliedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
+                             Bundle savedInstanceState) {
+
+        taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_tasks_applied, container, false);
@@ -105,7 +107,7 @@ public class MyTasksAppliedFragment extends Fragment {
                 taskList = response.body().getTaskList();
 
                 if (taskList != null){
-                    adapter = new TaskPostedAdapter(getContext(), taskList);
+                    adapter = new TaskAppliedAdapter(getContext(), taskList);
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(adapter);

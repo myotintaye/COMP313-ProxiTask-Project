@@ -66,8 +66,8 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
                              Bundle savedInstanceState) {
 
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
-
-        Bundle bundle = getArguments();
+//
+//        Bundle bundle = getArguments();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_display_task_detail, container, false);
 
