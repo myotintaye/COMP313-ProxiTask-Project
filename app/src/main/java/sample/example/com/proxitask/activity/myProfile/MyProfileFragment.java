@@ -1,10 +1,16 @@
 package sample.example.com.proxitask.activity.myProfile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,22 +20,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.activity.EditProfileActivity;
 import sample.example.com.proxitask.model.APIUserResponse;
 import sample.example.com.proxitask.model.User;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TokenStore;
 import sample.example.com.proxitask.network.UserService;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyProfileFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,9 +37,12 @@ public class MyProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    TextView username,email,address,phone,completedTasks;
+
     private User user;
     private UserService userService;
 
+    MenuItem updateProfile;
 
 
     private OnFragmentInteractionListener mListener;
@@ -50,15 +51,6 @@ public class MyProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MyProfileFragment newInstance(String param1, String param2) {
         MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
@@ -83,10 +75,24 @@ public class MyProfileFragment extends Fragment {
 
         userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
 
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        updateProfile = view.findViewById(R.id.update_profile);
+
+        username = view.findViewById(R.id.txt_username_myprofile);
+        address = view.findViewById(R.id.txt_address_myprofile);
+        email = view.findViewById(R.id.txt_email_myprofile);
+        phone = view.findViewById(R.id.txt_phone_myprofile);
+        completedTasks = view.findViewById(R.id.txt_num_of_completed_tasks_myprofile);
 
         /* Get user info */
+        fetchUser();
+
+        return view;
+    }
+
+    private void fetchUser() {
         userService.getUser(TokenStore.getToken(getContext())).enqueue(new Callback<APIUserResponse>() {
             @Override
             public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
@@ -95,13 +101,10 @@ public class MyProfileFragment extends Fragment {
                 if (user != null){
 
                     /* Load the UI */
-                    TextView username = view.findViewById(R.id.txt_username_myprofile);
-                    TextView address = view.findViewById(R.id.txt_address_myprofile);
-
                     checkAndSetText(username, user.getUserName());
-                    checkAndSetText(address, user.getEmail());
-
-                    TextView completedTasks = view.findViewById(R.id.txt_num_of_completed_tasks_myprofile);
+                    checkAndSetText(address, user.getAddress());
+                    checkAndSetText(phone, user.getPhone());
+                    checkAndSetText(email,user.getEmail());
 //                    completedTasks.setText(user.getTaskCompleted().length);
                 }
             }
@@ -111,8 +114,6 @@ public class MyProfileFragment extends Fragment {
                 Toast.makeText(getContext(),"Having troubles in pulling user data. Please try again later.",Toast.LENGTH_LONG).show();
             }
         });
-
-        return view;
     }
 
     private void checkAndSetText(TextView t, String value){
@@ -132,8 +133,15 @@ public class MyProfileFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        fetchUser();
+        super.onResume();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -162,4 +170,6 @@ public class MyProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

@@ -28,13 +28,14 @@
             android:gravity="center"
             android:textColor="#ffffff"
             android:text="My Profile"/>
+
         <TextView
             android:id="@+id/tv_save"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="#ffffff"
-            android:text="Save"/>
+            android:text="Save"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 
@@ -72,13 +73,12 @@
         android:layout_marginLeft="12dp"
         android:gravity="center_vertical"
         android:text="Address"/>
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
