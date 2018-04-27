@@ -29,12 +29,12 @@ import sample.example.com.proxitask.network.TokenStore;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksPostedFragment.OnFragmentInteractionListener} interface
+ * {@link MyTasksAppliedFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksPostedFragment#newInstance} factory method to
+ * Use the {@link MyTasksAppliedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksPostedFragment extends Fragment {
+public class MyTasksAppliedFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,7 +53,7 @@ public class MyTasksPostedFragment extends Fragment {
 
     private TaskService taskService;
 
-    public MyTasksPostedFragment() {
+    public MyTasksAppliedFragment() {
         // Required empty public constructor
     }
 
@@ -63,11 +63,11 @@ public class MyTasksPostedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksPostedFragment.
+     * @return A new instance of fragment MyTasksAppliedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksPostedFragment newInstance(String param1, String param2) {
-        MyTasksPostedFragment fragment = new MyTasksPostedFragment();
+    public static MyTasksAppliedFragment newInstance(String param1, String param2) {
+        MyTasksAppliedFragment fragment = new MyTasksAppliedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,21 +86,19 @@ public class MyTasksPostedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
+                             Bundle savedInstanceState) {taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_tasks_posted, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_tasks_applied, container, false);
 
-        recyclerView = view.findViewById(R.id.recycler_view_task_posted);
+        recyclerView = view.findViewById(R.id.recycler_view_task_applied);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
 
 
-        TextView noTasks = view.findViewById(R.id.tv_notasks);
-        noTasks.setEnabled(false);
+        TextView noTasks = view.findViewById(R.id.tv_notasksApplied);
+        noTasks.setVisibility(View.INVISIBLE);
 
-        taskService.getMyHiredTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
+        taskService.getMyAppliedTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
             @Override
             public void onResponse(Call<APIMyTasksResponse> call, Response<APIMyTasksResponse> response) {
 
@@ -113,7 +111,7 @@ public class MyTasksPostedFragment extends Fragment {
                     recyclerView.setAdapter(adapter);
                 }
                 else{
-                    noTasks.setEnabled(true);
+                    noTasks.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -122,8 +120,6 @@ public class MyTasksPostedFragment extends Fragment {
                 Toast.makeText(getContext(),"Having troubles in pulling task data. Please try again later.",Toast.LENGTH_LONG).show();
             }
         });
-
-
 
         return view;
 

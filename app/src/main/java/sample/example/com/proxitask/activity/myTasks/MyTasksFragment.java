@@ -74,6 +74,7 @@ public class MyTasksFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new MyTasksToDoFragment(), "To Do");
+        adapter.addFragment(new MyTasksAppliedFragment(), "Applied");
         adapter.addFragment(new MyTasksPostedFragment(), "Posted");
         adapter.addFragment(new MyTasksCompletedFragment(), "Completed");
         viewPager.setAdapter(adapter);

@@ -103,7 +103,7 @@ public class MyTasksToDoFragment extends Fragment {
 
 
         TextView noTasks = view.findViewById(R.id.tv_notasks);
-        noTasks.setEnabled(false);
+        noTasks.setVisibility(View.INVISIBLE);
 
 //
 //        Task taskTest = new Task("taskid", "userid");;
@@ -124,7 +124,7 @@ public class MyTasksToDoFragment extends Fragment {
                     recyclerViewHired.setAdapter(adapter);
                 }
                 else{
-                    noTasks.setEnabled(true);
+                    noTasks.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -134,27 +134,6 @@ public class MyTasksToDoFragment extends Fragment {
                 Toast.makeText(getContext(),"Having troubles in pulling task data. Please try again later.",Toast.LENGTH_LONG).show();
             }
         });
-
-        taskService.getMyAppliedTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
-            @Override
-            public void onResponse(Call<APIMyTasksResponse> call, Response<APIMyTasksResponse> response) {
-                taskListApplied = response.body().getTaskList();
-
-                if (taskListApplied != null){
-                    adapterApplied = new TaskToDoAdapter(getContext(), taskListApplied);
-                    recyclerViewApplied.setLayoutManager(mLayoutManagerApplied);
-                    recyclerViewApplied.setItemAnimator(new DefaultItemAnimator());
-                    recyclerViewApplied.setAdapter(adapterApplied);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<APIMyTasksResponse> call, Throwable t) {
-                Toast.makeText(getContext(),"Having troubles in pulling task application data. Please try again later.",Toast.LENGTH_LONG).show();
-            }
-        });
-
 
         return view;
     }

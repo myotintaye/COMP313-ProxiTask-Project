@@ -10,31 +10,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import sample.example.com.proxitask.R;
-import sample.example.com.proxitask.adapter.TaskPostedAdapter;
-import sample.example.com.proxitask.model.APIMyTasksResponse;
+import sample.example.com.proxitask.adapter.TaskCandidatesAdapter;
 import sample.example.com.proxitask.model.Task;
-import sample.example.com.proxitask.network.RetrofitInstance;
-import sample.example.com.proxitask.network.TaskService;
-import sample.example.com.proxitask.network.TokenStore;
+import sample.example.com.proxitask.network.UserService;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyTasksPostedFragment.OnFragmentInteractionListener} interface
+ * {@link SelectCandidatesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyTasksPostedFragment#newInstance} factory method to
+ * Use the {@link SelectCandidatesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTasksPostedFragment extends Fragment {
+public class SelectCandidatesFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,14 +38,14 @@ public class MyTasksPostedFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
     private RecyclerView recyclerView;
-    private TaskPostedAdapter adapter;
+    private TaskCandidatesAdapter adapter;
     private List<Task> taskList;
 
-    private TaskService taskService;
+    private UserService userService;
+    private String[] candidates;
 
-    public MyTasksPostedFragment() {
+    public SelectCandidatesFragment() {
         // Required empty public constructor
     }
 
@@ -63,11 +55,11 @@ public class MyTasksPostedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyTasksPostedFragment.
+     * @return A new instance of fragment SelectCandidatesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyTasksPostedFragment newInstance(String param1, String param2) {
-        MyTasksPostedFragment fragment = new MyTasksPostedFragment();
+    public static SelectCandidatesFragment newInstance(String param1, String param2) {
+        SelectCandidatesFragment fragment = new SelectCandidatesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -88,45 +80,24 @@ public class MyTasksPostedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_tasks_posted, container, false);
+        Bundle bundle = getArguments();
+        candidates = bundle.getStringArray("candidates");
 
-        recyclerView = view.findViewById(R.id.recycler_view_task_posted);
+        View view = inflater.inflate(R.layout.fragment_select_candidates, container, false);
+
+        recyclerView = view.findViewById(R.id.recycle_view_task_candidates);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
 
 
-        TextView noTasks = view.findViewById(R.id.tv_notasks);
-        noTasks.setEnabled(false);
-
-        taskService.getMyHiredTasks(TokenStore.getToken(getContext())).enqueue(new Callback<APIMyTasksResponse>() {
-            @Override
-            public void onResponse(Call<APIMyTasksResponse> call, Response<APIMyTasksResponse> response) {
-
-                taskList = response.body().getTaskList();
-
-                if (taskList != null){
-                    adapter = new TaskPostedAdapter(getContext(), taskList);
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(adapter);
-                }
-                else{
-                    noTasks.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<APIMyTasksResponse> call, Throwable t) {
-                Toast.makeText(getContext(),"Having troubles in pulling task data. Please try again later.",Toast.LENGTH_LONG).show();
-            }
-        });
+        adapter = new TaskCandidatesAdapter(getContext(), candidates);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
 
 
 
         return view;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
