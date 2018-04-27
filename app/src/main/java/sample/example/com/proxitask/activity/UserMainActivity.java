@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,10 +47,13 @@ import sample.example.com.proxitask.activity.myTasks.MyTasksToDoFragment;
 import sample.example.com.proxitask.activity.myTasks.SelectCandidatesFragment;
 import sample.example.com.proxitask.adapter.CustomBaseAdapter;
 import sample.example.com.proxitask.model.APIResponse;
+import sample.example.com.proxitask.model.APIUserResponse;
+import sample.example.com.proxitask.model.User;
 import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
+import sample.example.com.proxitask.network.UserService;
 
 public class UserMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -75,6 +79,11 @@ public class UserMainActivity extends AppCompatActivity
     FloatingActionButton fab;
 
     Location location;
+    LatLng lat,lon;
+
+    UserService userService;
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +100,9 @@ public class UserMainActivity extends AppCompatActivity
 
 
         taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
+        userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
+
+        setTitle("Available Tasks");
         buildFAB();
         buildDrawer();
 
@@ -99,61 +111,86 @@ public class UserMainActivity extends AppCompatActivity
     }
 
     private void populateTasksListView() {
-    if(this.location == null) return;
 
-    //getting nearby task by giving lat, long
-        taskService.getNearbyTasks(TokenStore.getToken(this), this.location.getLatitude(), this.location.getLongitude()).enqueue(new Callback<APIResponse>() {
+        userService.getUser(TokenStore.getToken(getApplicationContext())).enqueue(new Callback<APIUserResponse>() {
             @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                List<UserTask> tasks = response.body().getData();
-                List<TaskItem> rowItems=new ArrayList<TaskItem>();
+            public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
+                user = response.body().getUser();
 
-                if (tasks != null){
-                    for (UserTask task : tasks) {
+                Log.d("popupolate - getUser: ", user + " lat : " + user.getLat() + " long: " + user.getLon());
 
-                        rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
-                    }
-                    //taskAdapter.addAll(taskNames);
-                    CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
-                    tasksListView.setAdapter(customBaseAdapter);
-                    progressBar.setVisibility(View.GONE);
+                if (user != null){
+                    Log.d("populate","in user not null");
+                    //getting nearby task by giving lat, long
+                    taskService.getNearbyTasks(TokenStore.getToken(getApplicationContext()), 43.839826, -79.393827).enqueue(new Callback<APIResponse>() {
+                        @Override
+                        public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                            List<UserTask> tasks = response.body().getData();
+                            List<TaskItem> rowItems=new ArrayList<TaskItem>();
 
-                    /* set onClick */
-                    tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                            if (tasks != null){
+                                Log.d("Task list ", tasks.toString());
+                                for (UserTask task : tasks) {
+                                    Log.d("Task list ", task.getRadius()+"");
+                                    rowItems.add(new TaskItem(task.getRadius(),task.getTitle(),task.getDescription()));
+                                }
+                                //taskAdapter.addAll(rowItems);
+                                CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),rowItems);
+                                tasksListView.setAdapter(customBaseAdapter);
+                                progressBar.setVisibility(View.GONE);
 
-                        public void onItemClick(AdapterView<?> adapter, View v, int position, long arg){
+                                /* set onClick */
+                                tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-                            UserTask task = tasks.get(position);
+                                    public void onItemClick(AdapterView<?> adapter, View v, int position, long arg){
 
-                            Bundle bundle=new Bundle();
-                            bundle.putString("title",task.getTitle());
-                            bundle.putString("desc",task.getDescription());
-                            bundle.putDouble("price",task.getPrice());
-                            bundle.putString("date",task.getDate());
-                            bundle.putString("address",task.getAddress());
-                            bundle.putInt("radius",task.getRadius());
-                            bundle.putString("taskId", task.getTaskId());
+                                        UserTask task = tasks.get(position);
 
-                            DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
-                            displayTaskDetailfragment.setArguments(bundle);
+                                        Bundle bundle=new Bundle();
+                                        bundle.putString("title",task.getTitle());
+                                        bundle.putString("desc",task.getDescription());
+                                        bundle.putDouble("price",task.getPrice());
+                                        bundle.putString("date",task.getDate());
+                                        bundle.putString("address",task.getAddress());
+                                        bundle.putInt("radius",task.getRadius());
+                                        bundle.putString("taskId", task.getTaskId());
 
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
+                                        DisplayTaskDetailFragment displayTaskDetailfragment=new DisplayTaskDetailFragment();
+                                        displayTaskDetailfragment.setArguments(bundle);
 
-                            fab.hide();
+                                        FragmentManager fragmentManager = getSupportFragmentManager();
+                                        fragmentManager.beginTransaction().replace(R.id.fragment_main, displayTaskDetailfragment).commit();
+
+                                        fab.hide();
+                                    }
+                                });
+                            }
+
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<APIResponse> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(),"Call failed",Toast.LENGTH_LONG).show();
+                            Log.d("popupolate - getUser: ", "failed");
                         }
                     });
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"not working OMG",Toast.LENGTH_LONG).show();
+                }
 
             }
-
-
             @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Call failed",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<APIUserResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Having troubles in pulling user data. Please try again later.",Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
+
 
 
     private void buildFAB() {
@@ -161,8 +198,6 @@ public class UserMainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Create your task!", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 //create your task fragment
                 setTitle("Create a Task");
                 CreateTaskFragment createTaskFragment = new CreateTaskFragment();
@@ -222,21 +257,6 @@ public class UserMainActivity extends AppCompatActivity
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -245,6 +265,7 @@ public class UserMainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             Intent intent = new Intent(this, UserMainActivity.class);
+            setTitle("Available Tasks");
             startActivity(intent);
 
         } else if (id == R.id.nav_inbox) {

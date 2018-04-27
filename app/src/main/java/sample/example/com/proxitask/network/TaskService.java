@@ -17,7 +17,7 @@ public interface TaskService {
 
     /* Avaialble tasks nearby */
     @GET("task/search")
-    Call<APIResponse> getNearbyTasks(@Header("idToken") String authToken, @Query("lat") double latitude, @Query("long") double longitude);
+    Call<APIResponse> getNearbyTasks(@Header("idToken") String authToken, @Query("lat") double latitude, @Query("lon") double longitude);
 
     /* My Tasks */
     @GET("task/mycreated")
