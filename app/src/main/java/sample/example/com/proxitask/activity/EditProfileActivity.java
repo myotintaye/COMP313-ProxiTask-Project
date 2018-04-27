@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -56,11 +57,12 @@ public class EditProfileActivity extends AppCompatActivity implements GoogleApiC
     private TextView txtSaveUser;
     private UserService userService;
     private LatLng location;
+
+    private String userName,userEmail,userPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
 
         address = findViewById(R.id.et_address);
         address.setThreshold(3);
@@ -77,6 +79,15 @@ public class EditProfileActivity extends AppCompatActivity implements GoogleApiC
         name = findViewById(R.id.et_name);
         phone = findViewById(R.id.et_phone_number);
         email = findViewById(R.id.et_email);
+
+
+        //displaying the existing user info in edit view
+        userName = getIntent().getStringExtra("userName");
+        userPhone = getIntent().getStringExtra("userPhone");
+        userEmail = getIntent().getStringExtra("userEmail");
+        name.setText(userName);
+        phone.setText(userPhone);
+        email.setText(userEmail);
 
         txtSaveUser = findViewById(R.id.tv_save);
 

@@ -83,7 +83,7 @@ public class UserMainActivity extends AppCompatActivity
 
     UserService userService;
 
-    User user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +117,14 @@ public class UserMainActivity extends AppCompatActivity
             public void onResponse(Call<APIUserResponse> call, Response<APIUserResponse> response) {
                 user = response.body().getUser();
 
-                Log.d("popupolate - getUser: ", user + " lat : " + user.getLat() + " long: " + user.getLon());
+
+//                Log.d("popupolate - getUser: ", user + " lat : " + user.getLat() + " long: " + user.getLon());
 
                 if (user != null){
                     Log.d("populate","in user not null");
+
                     //getting nearby task by giving lat, long
-                    taskService.getNearbyTasks(TokenStore.getToken(getApplicationContext()), 43.839826, -79.393827).enqueue(new Callback<APIResponse>() {
+                    taskService.getNearbyTasks(TokenStore.getToken(getApplicationContext()), user.getLat(), user.getLon()).enqueue(new Callback<APIResponse>() {
                         @Override
                         public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                             List<UserTask> tasks = response.body().getData();
@@ -168,17 +170,15 @@ public class UserMainActivity extends AppCompatActivity
 
                         }
 
-
                         @Override
                         public void onFailure(Call<APIResponse> call, Throwable t) {
                             Toast.makeText(getApplicationContext(),"Call failed",Toast.LENGTH_LONG).show();
-                            Log.d("popupolate - getUser: ", "failed");
                         }
                     });
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"not working OMG",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"not working",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -190,8 +190,6 @@ public class UserMainActivity extends AppCompatActivity
 
 
     }
-
-
 
     private void buildFAB() {
         fab = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -323,13 +321,21 @@ public class UserMainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Log.d("menu test", "testing OnOptionsItemSelected");
-        Log.d("menu test", id+ " : " + R.id.update_profile + " : " + R.id.settings);
-
+//        Log.d("menu test", "testing OnOptionsItemSelected");
+//        Log.d("menu test", id+ " : " + R.id.update_profile + " : " + R.id.settings);
 
         if (id == R.id.update_profile) {
             Toast.makeText(getApplicationContext(), "Update Profile", Toast.LENGTH_LONG).show();
             Intent updateProfile = new Intent(getApplicationContext(),EditProfileActivity.class);
+            if(user!=null){
+
+                    //passing user data to edit user profile
+                updateProfile.putExtra("userName",user.getUserName());
+                updateProfile.putExtra("userPhone",user.getPhone());
+                    // userIntent.putExtra("userAddress",user.getAddress());
+                updateProfile.putExtra("userEmail",user.getEmail());
+
+                }
             this.startActivity(updateProfile);
             return true;
         }
