@@ -49,11 +49,8 @@ public class CreateTaskFragment extends Fragment implements GoogleApiClient.OnCo
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     Button btnCreateTask;
     private TaskService taskService;
-
     EditText title,desc,rewards,date,km;
-
     private LatLng location;
-
     private OnFragmentInteractionListener mListener;
 
     public CreateTaskFragment() {

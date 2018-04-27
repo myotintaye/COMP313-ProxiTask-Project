@@ -121,7 +121,7 @@ public class TaskToDoAdapter extends RecyclerView.Adapter<TaskToDoAdapter.MyView
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
-                    
+
                     context.startActivity(intent);
                 }
             });

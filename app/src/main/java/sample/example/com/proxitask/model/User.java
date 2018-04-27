@@ -26,11 +26,22 @@ public class User {
 
     private String money;
 
+    private Double lat;
+    private Double lon;
 
     public User(String userName, String email, String uid) {
         this.userName = userName;
         this.email = email;
         this.uid = uid;
+    }
+
+    public User(String userName,String address,String email,String phone,Double lat,Double lon){
+        this.userName = userName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public String getUserName() {
@@ -105,5 +116,19 @@ public class User {
         this.money = money;
     }
 
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
 
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
 }
