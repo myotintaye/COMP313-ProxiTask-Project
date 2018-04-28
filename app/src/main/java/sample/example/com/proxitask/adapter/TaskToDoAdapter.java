@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -13,8 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.model.Task;
@@ -27,7 +33,7 @@ public class TaskToDoAdapter extends RecyclerView.Adapter<TaskToDoAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView date, title, owner, address, points;
-        public Button btnNavigate, btnCall;
+        public Button btnNavigate, btnCall, btnDone;
 
         public MyViewHolder(View view) {
             super(view);
@@ -40,7 +46,7 @@ public class TaskToDoAdapter extends RecyclerView.Adapter<TaskToDoAdapter.MyView
 
             btnNavigate = (Button) view.findViewById(R.id.btn_navigate);
             btnCall = (Button) view.findViewById(R.id.btn_call);
-
+            btnDone = (Button) view.findViewById(R.id.btn_done);
         }
     }
 
@@ -80,6 +86,31 @@ public class TaskToDoAdapter extends RecyclerView.Adapter<TaskToDoAdapter.MyView
             }
 
             holder.points.setText("Coins: " + String.valueOf(task.getPrice()));
+
+            /* Only to show Done button if the task is today, to be improved later */
+            holder.btnDone.setVisibility(View.INVISIBLE);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            Date dateAfterFormatting = new Date();
+
+            String dateStr = task.getDate();
+            try {
+                dateAfterFormatting = formatter.parse(dateStr);
+                System.out.println(dateAfterFormatting);
+                System.out.println("time zone : " + TimeZone.getDefault().getID());
+                System.out.println(formatter.format(dateAfterFormatting));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Date today = new Date(System.currentTimeMillis());
+
+            if (dateAfterFormatting != null && dateAfterFormatting.compareTo(today) < 0 ){
+                holder.btnDone.setVisibility(View.VISIBLE);
+            }
+
 
             holder.btnNavigate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,6 +154,22 @@ public class TaskToDoAdapter extends RecyclerView.Adapter<TaskToDoAdapter.MyView
                     }
 
                     context.startActivity(intent);
+                }
+            });
+
+            holder.btnDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    /* call complete API */
+
+
+                    /* reset style */
+                    Toast.makeText(context,"Task completed, thank you!",Toast.LENGTH_LONG).show();
+
+                    /* Disable the color */
+                    holder.btnDone.setBackgroundColor(Color.parseColor("#D2D2D2"));
+                    holder.btnDone.setEnabled(false);
                 }
             });
 

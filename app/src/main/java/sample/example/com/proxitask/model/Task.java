@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class Task {
 
 
-
     @SerializedName("_id")
     private String taskId;
 
@@ -33,7 +32,6 @@ public class Task {
     private String phone;
 
     private String candidateHired;
-
     private String[] candidates;
 
 
@@ -42,6 +40,11 @@ public class Task {
         this.taskId = taskId;
         this.userId = userId;
     }
+//
+//    public Task(String taskId, String candidateUid){
+//        this.taskId = taskId;
+//        this.candidateHired = candidateUid;
+//    }
 
 //    Getters and Setters
 

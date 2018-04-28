@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
 import sample.example.com.proxitask.model.APISingleResponse;
+import sample.example.com.proxitask.model.UserTask;
 import sample.example.com.proxitask.network.RetrofitInstance;
 import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
@@ -171,11 +173,18 @@ public class DisplayTaskDetailFragment extends Fragment implements OnMapReadyCal
 
     }
 
+
     public void applyTask(String taskId){
         taskService.applyTask(TokenStore.getToken(getContext()), taskId).enqueue(new Callback<APISingleResponse>() {
             @Override
             public void onResponse(Call<APISingleResponse> call, Response<APISingleResponse> response) {
+
+                UserTask task = response.body().getData();
+
+                Log.d("applyTask response = ", response.body().toString());
+
                 Toast.makeText(getContext(),"Task applied, please wait for task owner to review.",Toast.LENGTH_LONG).show();
+
 
                 /* Disable the color */
                 btnApplyTask.setText(getString(R.string.btn_apply_task_applied));

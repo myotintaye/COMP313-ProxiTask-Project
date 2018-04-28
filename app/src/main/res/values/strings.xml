@@ -14,6 +14,7 @@
 
     <string name="btn_navigate">Navigate</string>
     <string name="btn_call">Call</string>
+    <string name="btn_done">Done</string>
 
     <string name="btn_assign">Assign</string>
     <string name="btn_edit">Edit</string>

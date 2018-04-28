@@ -43,7 +43,14 @@ public interface TaskService {
     @POST("task/apply")
     Call<APISingleResponse> applyTask(
             @Header("idToken") String authToken,
-            @Field("_id") String taskId
+            @Field("taskId") String taskId
     );
+
+    @POST("task/hire")
+    Call<APISingleResponse> hireTask(@Header("idToken") String authToken, @Body String taskId, @Body String candidate_user_id);
+
+
+///task/complete/:taskId
+
 
 }

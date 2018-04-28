@@ -14,9 +14,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.example.com.proxitask.R;
+import sample.example.com.proxitask.model.APISingleResponse;
 import sample.example.com.proxitask.model.APIUserResponse;
 import sample.example.com.proxitask.model.User;
 import sample.example.com.proxitask.network.RetrofitInstance;
+import sample.example.com.proxitask.network.TaskService;
 import sample.example.com.proxitask.network.TokenStore;
 import sample.example.com.proxitask.network.UserService;
 
@@ -27,6 +29,7 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
     private String taskId;
 
     private UserService userService;
+    private TaskService taskService;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -51,7 +54,7 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
         this.taskId = taskId;
 
         userService = RetrofitInstance.getRetrofitInstance().create(UserService.class);
-
+        taskService = RetrofitInstance.getRetrofitInstance().create(TaskService.class);
     }
 
     @Override
@@ -120,13 +123,7 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
                         public void onClick(View view){
 
                             /* Hire the candidate */
-//                            hireTask(taskId);
-
-                            /* Disable the button */
-
-                            holder.btnHire.setText("Hired");
-                            holder.btnHire.setBackgroundColor(Color.parseColor("#D2D2D2"));
-                            holder.btnHire.setEnabled(false);
+                            hireTask(taskId);
 
                         }
                     });
@@ -138,9 +135,32 @@ public class TaskCandidatesAdapter extends RecyclerView.Adapter<TaskCandidatesAd
             public void onFailure(Call<APIUserResponse> call, Throwable t) {
                 Toast.makeText(context,"Having troubles in pulling user data. Please try again later.",Toast.LENGTH_LONG).show();
             }
+
+            public void hireTask(String taskId){
+                taskService.applyTask(TokenStore.getToken(context), taskId).enqueue(new Callback<APISingleResponse>() {
+                    @Override
+                    public void onResponse(Call<APISingleResponse> call, Response<APISingleResponse> response) {
+                        Toast.makeText(context,"Task applied, please wait for task owner to review.",Toast.LENGTH_LONG).show();
+
+                        /* Disable the button */
+
+                        holder.btnHire.setText("Hired");
+                        holder.btnHire.setBackgroundColor(Color.parseColor("#D2D2D2"));
+                        holder.btnHire.setEnabled(false);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<APISingleResponse> call, Throwable t) {
+                        Toast.makeText(context,"There is something wrong. Please try again later.",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         });
 
     }
+
+
 
     @Override
     public int getItemCount() {
